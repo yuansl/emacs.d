@@ -7,8 +7,6 @@
 
 (add-hook 'c-mode-common-hook
 	  (lambda ()
-	    (setq fill-column 80)
-	    (auto-fill-mode 1)
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))
 	    (setq company-clang-arguments

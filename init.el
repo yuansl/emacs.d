@@ -69,6 +69,10 @@
 	  (lambda ()
 	    (sqlind-minor-mode)))
 
+(add-hook 'text-mode-hook
+	  (lambda ()
+	    (setq fill-column 80)
+	    (auto-fill-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
