@@ -6,11 +6,11 @@
 ;; `%F': frame-name
 ;; `%@': '@'(if on a remote machine) or '-'(if on a local machine)
 ;; `%f': file-name
-(setq-default frame-title-format (concat "%F %@ %f"))
+(setq-default frame-title-format "%F %@ %f")
 
 (setq-default major-mode 'text-mode)
 
-(add-hook 'after-init-hook 'do_after_init)
+(add-hook 'after-init-hook 'do_whatever_after_init)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -22,7 +22,6 @@
  '(column-number-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
- '(global-auto-revert-mode t)
  ;; '(global-subword-mode t)
  '(icomplete-mode t)
  '(ido-enable-flex-matching t)
@@ -61,8 +60,9 @@
 (require 'init-html)
 (require 'init-c)
 
-(defun do_after_init ()
+(defun do_whatever_after_init ()
   (global-company-mode)
+  (global-auto-revert-mode t)
   (setq-default mmm-global-mode 'maybe))
 
 (add-hook 'sql-mode-hook
