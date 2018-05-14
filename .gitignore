@@ -9,3 +9,5 @@ eshell/*
 *.last
 elpa/*
 session*
+url/
+*.orig
