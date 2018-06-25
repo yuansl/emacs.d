@@ -18,4 +18,10 @@
 	      (ggtags-mode)
 	      (setenv "GTAGSLIBPATH" (file-truename "~/lib/systemsymbol")))))
 
+(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
+(require 'bison-mode)
+(add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
+;; (require 'company-c-headers)
+;; (add-to-list 'company-backends 'company-c-headers)
+
 (provide 'init-c)

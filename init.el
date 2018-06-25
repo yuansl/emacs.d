@@ -22,7 +22,6 @@
  '(column-number-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
- ;; '(global-subword-mode t)
  '(icomplete-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
@@ -34,15 +33,17 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (mmm-mode async yasnippet sql-indent ggtags company)))
+    (company-c-headers company-go markdown-mode mmm-mode async yasnippet sql-indent ggtags company)))
  '(server-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
 
-;; This is a emacs elpa mirror from china
-(setq-default package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")))
+;; This is an emacs elpa mirror from china: CST:China Standard Time
+(if (equal (car (cdr (current-time-zone))) "CST")
+    (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+			     ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -54,12 +55,11 @@
 (require 'mmm-auto)
 (require 'ggtags)
 (require 'yasnippet)
-
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 ;; load initialization for c programming language and html mode
 (require 'init-html)
 (require 'init-c)
-
+(require 'init-go)
 (defun do_whatever_after_init ()
   (global-company-mode)
   (global-auto-revert-mode t)

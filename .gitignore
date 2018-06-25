@@ -11,3 +11,6 @@ elpa/*
 session*
 url/
 *.orig
+tramp
+diary
+*.dat
