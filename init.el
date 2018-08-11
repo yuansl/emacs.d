@@ -7,9 +7,9 @@
 ;; `%@': '@'(if on a remote machine) or '-'(if on a local machine)
 ;; `%f': file-name
 (setq-default frame-title-format "%F %@ %f")
-
 (setq-default major-mode 'text-mode)
 
+(setq-default ring-bell-function 'ignore)
 (add-hook 'after-init-hook 'do_whatever_after_init)
 
 (custom-set-variables
@@ -29,17 +29,16 @@
  '(ido-use-filename-at-point (quote guess))
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
- '(menu-bar-mode nil)
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (company-c-headers company-go markdown-mode mmm-mode async yasnippet sql-indent ggtags company)))
+    (magit neotree company-c-headers company-go markdown-mode async yasnippet sql-indent ggtags company)))
  '(server-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
-
+;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
     (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
@@ -52,7 +51,6 @@
 (when (not (package--user-selected-p 'company))
   (package-install-selected-packages))
 (require 'company)
-(require 'mmm-auto)
 (require 'ggtags)
 (require 'yasnippet)
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -62,8 +60,7 @@
 (require 'init-go)
 (defun do_whatever_after_init ()
   (global-company-mode)
-  (global-auto-revert-mode t)
-  (setq-default mmm-global-mode 'maybe))
+  (global-auto-revert-mode t))
 
 (add-hook 'sql-mode-hook
 	  (lambda ()
@@ -71,7 +68,9 @@
 (add-hook 'text-mode-hook
 	  (lambda ()
 	    (setq fill-column 80)
-	    (auto-fill-mode)))
+	    (auto-fill-mode)
+	    (setq bidi-display-reordering nil)
+	    (setq line-move-visual nil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
