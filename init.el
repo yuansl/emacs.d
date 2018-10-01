@@ -32,7 +32,7 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (magit neotree company-c-headers company-go markdown-mode async yasnippet sql-indent ggtags company)))
+    (company-jedi yaml-mode emojify neotree company-c-headers company-go markdown-mode async yasnippet sql-indent ggtags company)))
  '(server-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
@@ -58,6 +58,9 @@
 (require 'init-html)
 (require 'init-c)
 (require 'init-go)
+(require 'init-python)
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 (defun do_whatever_after_init ()
   (global-company-mode)
   (global-auto-revert-mode t))
