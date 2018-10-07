@@ -37,6 +37,7 @@
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
+ '(menu-bar-mode nil)
  '(tooltip-mode nil))
 ;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
