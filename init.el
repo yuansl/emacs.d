@@ -4,7 +4,7 @@
 
 ;; frame-title-format:
 ;; `%F': frame-name
-;; `%@': '@'(if on a remote machine) or '-'(if on a local machine)
+;; `%@': '@'(if at a remote machine) or '-'(if at localhost)
 ;; `%f': file-name
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
@@ -32,7 +32,7 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (company-jedi yaml-mode emojify neotree company-c-headers company-go markdown-mode async yasnippet sql-indent ggtags company)))
+    (scala-mode ack flycheck-golangci-lint kotlin-mode company-jedi yaml-mode emojify neotree company-c-headers company-go markdown-mode async yasnippet sql-indent ggtags company)))
  '(server-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
@@ -55,12 +55,12 @@
 (require 'yasnippet)
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 ;; load initialization for c programming language and html mode
-(require 'init-html)
+(require 'init-text)
 (require 'init-c)
 (require 'init-go)
 (require 'init-python)
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(require 'init-java)
+
 (defun do_whatever_after_init ()
   (global-company-mode)
   (global-auto-revert-mode t))
@@ -68,12 +68,7 @@
 (add-hook 'sql-mode-hook
 	  (lambda ()
 	    (sqlind-minor-mode)))
-(add-hook 'text-mode-hook
-	  (lambda ()
-	    (setq fill-column 80)
-	    (auto-fill-mode)
-	    (setq bidi-display-reordering nil)
-	    (setq line-move-visual nil)))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
