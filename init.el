@@ -36,6 +36,7 @@
  '(server-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
+ '(menu-bar-mode nil)
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
 ;; (global-hl-line-mode t)
