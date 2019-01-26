@@ -5,7 +5,7 @@
 (add-hook 'python-mode-hook (lambda ()
 			      (setq jedi:environment-virtualenv
 				    (append python-environment-virtualenv
-					    '("--python" "/usr/local/bin/python3")))
+					    '("--python" "python3")))
 			      (setq jedi:use-shortcuts t) ; use key-binding 'M-.' and 'M-,'
 			      (jedi:setup)))
 (provide 'init-python)
