@@ -8,7 +8,7 @@
 ;; `%f': file-name
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
-
+(global-set-key (kbd "C-x f") 'find-file-in-repository)
 (setq-default ring-bell-function 'ignore)
 (add-hook 'after-init-hook 'do_whatever_after_init)
 
@@ -29,14 +29,14 @@
  '(ido-use-filename-at-point (quote guess))
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
+ '(menu-bar-mode nil)
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (scala-mode ack flycheck-golangci-lint kotlin-mode company-jedi yaml-mode emojify neotree company-c-headers company-go markdown-mode async yasnippet sql-indent ggtags company)))
+    (find-file-in-repository flycheck scala-mode ack flycheck-golangci-lint kotlin-mode company-jedi yaml-mode emojify neotree company-c-headers company-go markdown-mode async yasnippet sql-indent ggtags company)))
  '(server-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
- '(menu-bar-mode nil)
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
 ;; (global-hl-line-mode t)
