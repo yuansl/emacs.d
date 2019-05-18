@@ -14,3 +14,4 @@ url/
 tramp
 diary
 *.dat
+.python-environments
