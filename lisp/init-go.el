@@ -6,7 +6,7 @@
 			  (add-hook 'before-save-hook 'gofmt-before-save)
 			  (if (not (string-match "go" compile-command))
 			      (set (make-local-variable 'compile-command)
-				   "go test"))
+				   "go test -v && go build"))
 			  (local-unset-key (kbd "M-."))
 			  (local-set-key (kbd "M-.") 'godef-jump)))
 
