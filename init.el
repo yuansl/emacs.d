@@ -60,7 +60,7 @@
 (require 'init-c)
 (require 'init-go)
 (require 'init-python)
-(require 'init-java)
+;; (require 'init-java)
 
 (defun do_whatever_after_init ()
   (global-company-mode)
