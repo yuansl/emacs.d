@@ -10,7 +10,7 @@
 (setq-default major-mode 'text-mode)
 (global-set-key (kbd "C-x f") 'find-file-in-repository)
 (setq-default ring-bell-function 'ignore)
-(add-hook 'after-init-hook 'do_whatever_after_init)
+;; (add-hook 'after-init-hook 'do_whatever_after_init)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -32,8 +32,7 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (find-file-in-repository flycheck scala-mode ack flycheck-golangci-lint kotlin-mode company-jedi yaml-mode emojify neotree company-c-headers company-go markdown-mode async yasnippet sql-indent ggtags company)))
- '(server-mode t)
+    (edit-server lsp-ui use-package company-lsp find-file-in-repository flycheck  ack company-jedi yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -48,26 +47,51 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
-(when (not (package--user-selected-p 'company))
-  (package-install-selected-packages))
-(require 'company)
-(require 'ggtags)
-(require 'yasnippet)
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+(use-package edit-server
+  :if window-system
+  :init
+  (add-hook 'after-init-hook 'server-start t)
+  (add-hook 'after-init-hook 'edit-server-start t))
+
+(use-package company
+  :config
+  (global-company-mode)
+  (global-auto-revert-mode t))
+
+(use-package lsp-mode
+  :init
+  (setq lsp-prefer-flymake nil)
+  :commands (lsp lsp-deferred))
+
+(use-package flycheck
+  :config
+  (add-hook 'go-mode-hook (lambda () (flycheck-mode))))
+
+;; optional - provides fancier overlays
+(use-package lsp-ui
+  :init
+  (setq lsp-ui-doc-enable nil)
+  :commands lsp-ui-mode)
+
+(use-package company-lsp
+  :commands company-lsp)
+
+(use-package ggtags)
+(use-package yasnippet)
+(use-package sql-indent
+  :init
+  (setq sql-indent-offset 8))
+
 ;; load initialization for c programming language and html mode
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-text)
 (require 'init-c)
 (require 'init-go)
 (require 'init-python)
-(require 'init-java)
-
-(defun do_whatever_after_init ()
-  (global-company-mode)
-  (global-auto-revert-mode t))
-
-(add-hook 'sql-mode-hook
-	  (lambda ()
-	    (sqlind-minor-mode)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
