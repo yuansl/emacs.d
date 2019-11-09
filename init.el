@@ -33,7 +33,7 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (edit-server lsp-ui use-package company-lsp find-file-in-repository flycheck  ack company-jedi yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
+    (go-mode edit-server lsp-ui use-package company-lsp find-file-in-repository flycheck ack company-jedi yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
