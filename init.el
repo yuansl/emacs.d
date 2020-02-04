@@ -29,10 +29,11 @@
  '(ido-use-filename-at-point (quote guess))
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
+ '(menu-bar-mode nil)
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (go-mode edit-server lsp-ui use-package company-lsp find-file-in-repository flycheck ack company-jedi yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
+    (go-mode edit-server lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
