@@ -29,7 +29,6 @@
  '(ido-use-filename-at-point (quote guess))
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
- '(menu-bar-mode nil)
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
