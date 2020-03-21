@@ -10,7 +10,6 @@
 (setq-default major-mode 'text-mode)
 (global-set-key (kbd "C-x f") 'find-file-in-repository)
 (setq-default ring-bell-function 'ignore)
-;; (add-hook 'after-init-hook 'do_whatever_after_init)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -52,10 +51,11 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(add-hook 'after-init-hook (lambda () (unless (file-exists-p (format "%s/emacs%d/%s" (or (getenv "TMPDIR") "/tmp") (user-uid) server-name)) (server-mode))))
+
 (use-package edit-server
   :if window-system
   :init
-  (add-hook 'after-init-hook 'server-start t)
   (add-hook 'after-init-hook 'edit-server-start t))
 
 (use-package company
