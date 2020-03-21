@@ -15,3 +15,5 @@ tramp
 diary
 *.dat
 .python-environments
+*.elc
+.lsp-session*
