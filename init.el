@@ -32,7 +32,7 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (go-mode edit-server lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
+    (go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -52,11 +52,6 @@
 (setq use-package-always-ensure t)
 
 (add-hook 'after-init-hook (lambda () (unless (file-exists-p (format "%s/emacs%d/%s" (or (getenv "TMPDIR") "/tmp") (user-uid) server-name)) (server-mode))))
-
-(use-package edit-server
-  :if window-system
-  :init
-  (add-hook 'after-init-hook 'edit-server-start t))
 
 (use-package company
   :config
