@@ -25,13 +25,13 @@
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
  '(ido-mode (quote both) nil (ido))
- '(ido-use-filename-at-point (quote guess))
+ '(ido-use-filename-at-point t)
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
+    (go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -75,8 +75,6 @@
 (use-package company-lsp
   :commands company-lsp)
 
-(use-package ggtags)
-(use-package yasnippet)
 (use-package sql-indent
   :init
   (setq sql-indent-offset 8))
@@ -87,6 +85,11 @@
 (require 'init-c)
 (require 'init-go)
 (require 'init-python)
+
+(use-package yasnippet
+  :ensure t
+  :commands yas-minor-mode
+  :hook (go-mode . yas-minor-mode))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
