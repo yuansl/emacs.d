@@ -33,7 +33,7 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell company-go go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
+    (go-guru go-snippets go-impl go-tag go-fill-struct company-go go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -57,6 +57,10 @@
 (use-package company
   :config
   (global-company-mode)
+  (setq company-tooltip-limit 20)                      ; bigger popup window
+  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+  (setq company-echo-delay 0)                          ; remove annoying blinking
+  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
   (global-auto-revert-mode t))
 
 (use-package lsp-mode
