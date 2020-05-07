@@ -1,4 +1,4 @@
-(add-hook 'go-mode-hook #'lsp-deferred)
+;; (add-hook 'go-mode-hook #'lsp-deferred)
 (add-hook 'go-mode-hook (lambda ()
 			  (subword-mode)
 			  (add-hook 'before-save-hook 'gofmt-before-save)
@@ -6,6 +6,9 @@
 			      (set (make-local-variable 'compile-command)
 				   "go vet && go test -v"))
 			  (local-unset-key (kbd "M-."))
-			  (local-set-key (kbd "M-.") 'lsp-find-definition)))
+			  ;; (local-set-key (kbd "M-.") 'lsp-find-definition)
+			  (local-set-key (kbd "M-.") 'godef-jump)
+			  (local-set-key (kbd "M-*") 'pop-tag-mark)
+			  ))
 
 (provide 'init-go)

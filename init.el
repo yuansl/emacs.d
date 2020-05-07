@@ -19,6 +19,7 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(column-number-mode t)
+ '(custom-enabled-themes (quote (misterioso)))
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(icomplete-mode t)
@@ -32,7 +33,7 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
+    (exec-path-from-shell company-go go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -60,7 +61,7 @@
 
 (use-package lsp-mode
   :init
-  (setq lsp-prefer-flymake nil)
+  (setq lsp-diagnostic-package :auto)
   :commands (lsp lsp-deferred))
 
 (use-package flycheck

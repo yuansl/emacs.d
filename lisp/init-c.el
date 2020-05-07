@@ -7,6 +7,7 @@
 (add-hook 'c-mode-common-hook #'lsp-deferred)
 (add-hook 'c-mode-common-hook
 	  (lambda ()
+	    (setq lsp-enable-indentation nil)
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
 	    ;; behavior of symbol `#', e.g. #define... #include...
