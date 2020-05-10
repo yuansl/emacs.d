@@ -19,9 +19,9 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(column-number-mode t)
- '(custom-enabled-themes (quote (misterioso)))
  '(display-time-mode t)
  '(electric-pair-mode t)
+ '(global-auto-revert-mode t)
  '(icomplete-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
@@ -29,11 +29,12 @@
  '(ido-use-filename-at-point t)
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
+ '(lsp-enable-file-watchers nil)
  '(menu-bar-mode nil)
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (go-guru go-snippets go-impl go-tag go-fill-struct company-go go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
+    (company-go projectile-speedbar projectile go-snippets go-impl go-tag go-fill-struct go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -60,8 +61,8 @@
   (setq company-tooltip-limit 20)                      ; bigger popup window
   (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
   (setq company-echo-delay 0)                          ; remove annoying blinking
-  (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
-  (global-auto-revert-mode t))
+  (unless (not (functionp 'company-go))
+    (push 'company-go company-backends)))
 
 (use-package lsp-mode
   :init
@@ -78,9 +79,6 @@
   (setq lsp-ui-doc-enable nil)
   :commands lsp-ui-mode)
 
-(use-package company-lsp
-  :commands company-lsp)
-
 (use-package sql-indent
   :init
   (setq sql-indent-offset 8))
@@ -96,7 +94,9 @@
   :ensure t
   :commands yas-minor-mode
   :hook (go-mode . yas-minor-mode))
-
+(use-package projectile
+  :ensure t)
+(use-package projectile-speedbar)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
