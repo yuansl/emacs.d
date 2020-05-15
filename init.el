@@ -16,6 +16,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(column-number-mode t)
@@ -28,10 +30,11 @@
  '(ido-use-filename-at-point t)
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
+ '(lsp-enable-file-watchers nil)
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (scala-mode go-mode lsp-ui use-package company-lsp find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
+    (go-snippets company-go projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -59,7 +62,7 @@
 
 (use-package lsp-mode
   :init
-  (setq lsp-prefer-flymake nil)
+  (setq lsp-diagnostic-package :auto)
   :commands (lsp lsp-deferred))
 
 (use-package flycheck
@@ -71,9 +74,6 @@
   :init
   (setq lsp-ui-doc-enable nil)
   :commands lsp-ui-mode)
-
-(use-package company-lsp
-  :commands company-lsp)
 
 (use-package sql-indent
   :init
