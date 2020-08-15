@@ -7,6 +7,6 @@
 			  (if (not (string-match "go" compile-command))
 			      (set (make-local-variable 'compile-command)
 				   "go vet && go test -v"))
-			  (local-set-key (kbd "M-.") 'godef-jump)))
+			  (local-set-key (kbd "M-.") 'lsp-find-definition)))
 
 (provide 'init-go)

@@ -34,7 +34,7 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(package-selected-packages
    (quote
-    (company-go projectile-speedbar projectile go-snippets go-impl go-tag go-fill-struct go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
+    (company-lua protobuf-mode scala-mode company-go projectile-speedbar projectile go-snippets go-impl go-tag go-fill-struct go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -48,12 +48,12 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;; (package-initialize)
 
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(add-hook 'after-init-hook (lambda () (unless (file-exists-p (format "%s/emacs%d/%s" (or (getenv "TMPDIR") "/tmp") (user-uid) server-name)) (server-mode))))
+(add-hook 'after-init-hook (lambda () (unless server-mode (server-mode))))
 
 (use-package company
   :config
