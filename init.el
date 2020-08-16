@@ -48,7 +48,8 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-;; (package-initialize)
+(when (< emacs-major-version 27)
+  (package-initialize))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
