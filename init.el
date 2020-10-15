@@ -26,15 +26,14 @@
  '(icomplete-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
- '(ido-mode (quote both) nil (ido))
+ '(ido-mode 'both nil (ido))
  '(ido-use-filename-at-point t)
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
  '(lsp-enable-file-watchers nil)
- '(mouse-avoidance-mode (quote animate) nil (avoid))
+ '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   (quote
-    (lua-mode protobuf-mode go-snippets company-go projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode company-c-headers markdown-mode async yasnippet sql-indent ggtags company)))
+   '(lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode company-c-headers markdown-mode async yasnippet sql-indent ggtags company))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -54,21 +53,24 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(add-hook 'after-init-hook (lambda () (unless server-mode (server-mode))))
+(add-hook 'after-init-hook (lambda ()
+			     (global-auto-revert-mode t)
+			     (unless server-mode (server-mode))))
 
 (use-package company
+  :init
+  (set-variable 'company-backends '(company-capf company-keywords company-dabbrev-code company-clang
+	      (company-files company-gtags company-etags company-cmake company-semantic)
+	       company-dabbrev company-bbdb company-oddmuse))
   :config
-  (global-company-mode)
-  (global-auto-revert-mode t))
+  (setq company-minimum-prefix-length 1
+      company-idle-delay 0.0)
+  (global-company-mode))
 
 (use-package lsp-mode
   :init
   (setq lsp-diagnostic-package :auto)
   :commands (lsp lsp-deferred))
-
-(use-package flycheck
-  :config
-  (add-hook 'go-mode-hook (lambda () (flycheck-mode))))
 
 ;; optional - provides fancier overlays
 (use-package lsp-ui
@@ -86,11 +88,6 @@
 (require 'init-c)
 (require 'init-go)
 (require 'init-python)
-
-(use-package yasnippet
-  :ensure t
-  :commands yas-minor-mode
-  :hook (go-mode . yas-minor-mode))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

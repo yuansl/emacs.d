@@ -1,4 +1,15 @@
-(add-hook 'go-mode-hook #'lsp-deferred)
+(use-package lsp-mode
+  :config
+  (add-hook 'go-mode-hook #'lsp-deferred))
+
+(use-package flycheck
+  :config
+  (add-hook 'go-mode-hook #'flycheck-mode))
+
+(use-package yasnippet
+  :ensure t
+  :commands yas-minor-mode
+  :hook (go-mode . yas-minor-mode))
 
 (add-hook 'go-mode-hook (lambda ()
 			  (go-imenu-setup)
