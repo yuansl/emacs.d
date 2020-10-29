@@ -16,22 +16,22 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(column-number-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
- '(global-auto-revert-mode t)
  '(icomplete-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
- '(ido-mode (quote both) nil (ido))
+ '(ido-mode 'both nil (ido))
  '(ido-use-filename-at-point t)
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
  '(lsp-enable-file-watchers nil)
- '(menu-bar-mode nil)
- '(mouse-avoidance-mode (quote animate) nil (avoid))
+ '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
    (quote
     (company-lua protobuf-mode scala-mode company-go projectile-speedbar projectile go-snippets go-impl go-tag go-fill-struct go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
@@ -48,14 +48,25 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-;; (package-initialize)
+(when (< emacs-major-version 27)
+  (package-initialize))
+
+;; if `use-package' does not exist, then refresh package contents from (m)elpa
+;; and install selected packages
+;; (package-refresh-contents t)
 
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(add-hook 'after-init-hook (lambda () (unless server-mode (server-mode))))
+(add-hook 'after-init-hook (lambda ()
+			     (global-auto-revert-mode t)
+			     (unless server-mode (server-mode))))
 
 (use-package company
+  :init
+  (set-variable 'company-backends '(company-capf company-dabbrev company-dabbrev-code company-files company-keywords
+	      (company-clang company-gtags company-etags company-cmake company-semantic)
+	        company-bbdb company-oddmuse))
   :config
   (global-company-mode)
   (setq company-tooltip-limit 20)                      ; bigger popup window
@@ -68,10 +79,6 @@
   :init
   (setq lsp-diagnostic-package :auto)
   :commands (lsp lsp-deferred))
-
-(use-package flycheck
-  :config
-  (add-hook 'go-mode-hook (lambda () (flycheck-mode))))
 
 ;; optional - provides fancier overlays
 (use-package lsp-ui
@@ -90,13 +97,6 @@
 (require 'init-go)
 (require 'init-python)
 
-(use-package yasnippet
-  :ensure t
-  :commands yas-minor-mode
-  :hook (go-mode . yas-minor-mode))
-(use-package projectile
-  :ensure t)
-(use-package projectile-speedbar)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
