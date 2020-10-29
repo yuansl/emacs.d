@@ -50,6 +50,10 @@
 (when (< emacs-major-version 27)
   (package-initialize))
 
+;; if `use-package' does not exist, then refresh package contents from (m)elpa
+;; and install selected packages
+;; (package-refresh-contents t)
+
 (require 'use-package)
 (setq use-package-always-ensure t)
 
@@ -59,9 +63,9 @@
 
 (use-package company
   :init
-  (set-variable 'company-backends '(company-capf company-keywords company-dabbrev-code company-clang
-	      (company-files company-gtags company-etags company-cmake company-semantic)
-	       company-dabbrev company-bbdb company-oddmuse))
+  (set-variable 'company-backends '(company-capf company-dabbrev company-dabbrev-code company-files company-keywords
+	      (company-clang company-gtags company-etags company-cmake company-semantic)
+	        company-bbdb company-oddmuse))
   :config
   (setq company-minimum-prefix-length 1
       company-idle-delay 0.0)
