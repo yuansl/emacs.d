@@ -38,6 +38,7 @@
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
+ '(menu-bar-mode nil)
  '(tooltip-mode nil))
 ;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
@@ -59,8 +60,7 @@
 (setq use-package-always-ensure t)
 
 (add-hook 'after-init-hook (lambda ()
-			     (global-auto-revert-mode t)
-			     (unless server-mode (server-mode))))
+			     (global-auto-revert-mode t)))
 
 (use-package company
   :init
