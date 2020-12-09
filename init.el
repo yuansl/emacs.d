@@ -59,7 +59,7 @@
 
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
-			     (unless server-mode (server-mode))))
+			     (unless (not (file-exists-p (concat server-socket-dir "/" server-name))) (server-mode))))
 
 (use-package company
   :init
