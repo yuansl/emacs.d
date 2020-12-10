@@ -33,11 +33,15 @@
  '(lsp-enable-file-watchers nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode company-c-headers markdown-mode async yasnippet sql-indent ggtags company))
+   '(lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
+
+(unless (string-equal system-type "darwin")
+   (menu-bar-mode 0))
+
 ;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
@@ -59,7 +63,7 @@
 
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
-			     (unless (not (file-exists-p (concat server-socket-dir "/" server-name))) (server-mode))))
+			     (global-company-mode)))
 
 (use-package company
   :init
@@ -68,8 +72,7 @@
 	        company-bbdb company-oddmuse))
   :config
   (setq company-minimum-prefix-length 1
-      company-idle-delay 0.0)
-  (global-company-mode))
+      company-idle-delay 0.0))
 
 (use-package lsp-mode
   :init
