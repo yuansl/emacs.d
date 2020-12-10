@@ -33,13 +33,15 @@
  '(lsp-enable-file-watchers nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   (quote
-    (company-lua protobuf-mode scala-mode company-go projectile-speedbar projectile go-snippets go-impl go-tag go-fill-struct go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode emojify company-c-headers markdown-mode async yasnippet sql-indent company)))
+   '(lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
- '(menu-bar-mode nil)
  '(tooltip-mode nil))
+
+(unless (string-equal system-type "darwin")
+   (menu-bar-mode 0))
+
 ;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
@@ -60,7 +62,8 @@
 (setq use-package-always-ensure t)
 
 (add-hook 'after-init-hook (lambda ()
-			     (global-auto-revert-mode t)))
+			     (global-auto-revert-mode t)
+			     (global-company-mode)))
 
 (use-package company
   :init
@@ -68,12 +71,8 @@
 	      (company-clang company-gtags company-etags company-cmake company-semantic)
 	        company-bbdb company-oddmuse))
   :config
-  (global-company-mode)
-  (setq company-tooltip-limit 20)                      ; bigger popup window
-  (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)                          ; remove annoying blinking
-  (unless (not (functionp 'company-go))
-    (push 'company-go company-backends)))
+  (setq company-minimum-prefix-length 1
+      company-idle-delay 0.0))
 
 (use-package lsp-mode
   :init
