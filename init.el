@@ -39,7 +39,7 @@
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
 
-(unless (string-equal system-type "darwin")
+(unless (string= system-type "darwin")
    (menu-bar-mode 0))
 
 ;; (global-hl-line-mode t)
@@ -60,6 +60,14 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
+
+(defun enable-emoji ()
+  (when (string= system-type "darwin")
+    (if (< emacs-major-version 27)
+	(set-fontset-font
+	 "fontset-default" 'unicode "Apple Color Emoji" nil 'prepend)
+      (set-fontset-font
+       t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))))
 
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
