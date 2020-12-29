@@ -33,7 +33,7 @@
  '(lsp-enable-file-watchers nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck ack yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
