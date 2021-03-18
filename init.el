@@ -30,10 +30,9 @@
  '(ido-use-filename-at-point t)
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
- '(lsp-enable-file-watchers nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile lsp-treemacs go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(go-dlv editorconfig markdown-toc flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -58,7 +57,10 @@
 ;; and install selected packages
 ;; (package-refresh-contents t)
 
-(require 'use-package)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
 (setq use-package-always-ensure t)
 
 (defun enable-emoji ()
@@ -85,6 +87,7 @@
 (use-package lsp-mode
   :init
   (setq lsp-diagnostic-package :auto)
+  (setq lsp-enable-file-watchers nil)
   :commands (lsp lsp-deferred))
 
 ;; optional - provides fancier overlays
@@ -96,6 +99,11 @@
 (use-package sql-indent
   :init
   (setq sql-indent-offset 8))
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.md\\'" . gfm-mode)
+  :commands (markdown-mode gfm-mode))
 
 ;; load initialization for c programming language and html mode
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))

@@ -12,6 +12,7 @@
   :hook (go-mode . yas-minor-mode))
 
 (add-hook 'go-mode-hook (lambda ()
+			  (lsp-ui-mode)
 			  (go-imenu-setup)
 			  (subword-mode)
 			  (setq gofmt-command "goimports")
@@ -19,7 +20,7 @@
 			  (if (not (string-match "go" compile-command))
 			      (set (make-local-variable 'compile-command)
 				   "go vet && go test -v"))
-			  (local-unset-key (kbd "M-."))
-			  (local-set-key (kbd "M-.") 'lsp-find-definition)))
+			  (define-key lsp-mode-map [remap xref-find-definitions] #'lsp-find-definition)
+			  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)))
 
 (provide 'init-go)
