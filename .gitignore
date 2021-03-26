@@ -17,3 +17,5 @@ diary
 .python-environments
 *.elc
 .lsp-session*
+.cache
+projectile-bookmarks.eld

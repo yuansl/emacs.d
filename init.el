@@ -8,7 +8,6 @@
 ;; `%f': file-name
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
-(global-set-key (kbd "C-x f") 'find-file-in-repository)
 (setq-default ring-bell-function 'ignore)
 
 (custom-set-variables
@@ -30,6 +29,7 @@
  '(ido-use-filename-at-point t)
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
+ '(large-file-warning-threshold 2000000)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
    '(go-dlv editorconfig markdown-toc flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile go-imenu go-tag go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
@@ -56,6 +56,11 @@
 ;; if `use-package' does not exist, then refresh package contents from (m)elpa
 ;; and install selected packages
 ;; (package-refresh-contents t)
+
+
+(use-package find-file-in-repository
+  :config
+  (global-set-key (kbd "C-x f") 'find-file-in-repository))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
