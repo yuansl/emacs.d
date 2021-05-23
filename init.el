@@ -32,7 +32,7 @@
  '(large-file-warning-threshold 2000000)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(go-dlv editorconfig markdown-toc flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile go-imports go-fill-struct go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(which-key bui go-dlv editorconfig markdown-toc flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -44,8 +44,8 @@
 ;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
-    (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-			     ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
+    (setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			     ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -57,6 +57,8 @@
 ;; and install selected packages
 ;; (package-refresh-contents t)
 
+(use-package which-key
+  :commands which-key-mode)
 
 (use-package find-file-in-repository
   :config
@@ -78,7 +80,8 @@
 
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
-			     (global-company-mode)))
+			     (global-company-mode)
+			     (which-key-mode)))
 
 (use-package company
   :init
@@ -93,6 +96,7 @@
   :init
   (setq lsp-diagnostic-package :auto)
   (setq lsp-enable-file-watchers nil)
+  (setq lsp-keymap-prefix "C-c l")
   :commands (lsp lsp-deferred))
 
 ;; optional - provides fancier overlays
