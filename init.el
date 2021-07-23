@@ -89,8 +89,8 @@
 	      (company-clang company-gtags company-etags company-cmake company-semantic)
 	        company-bbdb company-oddmuse))
   :config
-  (setq company-minimum-prefix-length 1
-      company-idle-delay 0.0))
+  (setq company-minimum-prefix-length 2
+      company-idle-delay 0.1))
 
 (use-package lsp-mode
   :init
