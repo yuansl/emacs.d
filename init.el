@@ -32,7 +32,7 @@
  '(large-file-warning-threshold 2000000)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(which-key bui go-dlv editorconfig markdown-toc flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(yasnippet-snippets which-key bui go-dlv editorconfig markdown-toc flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode go-snippets projectile-speedbar projectile go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -89,8 +89,8 @@
 	      (company-clang company-gtags company-etags company-cmake company-semantic)
 	        company-bbdb company-oddmuse))
   :config
-  (setq company-minimum-prefix-length 2
-      company-idle-delay 0.1))
+  (setq company-minimum-prefix-length 1
+      company-idle-delay 0.0))
 
 (use-package lsp-mode
   :init
