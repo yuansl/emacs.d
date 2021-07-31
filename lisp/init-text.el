@@ -1,8 +1,4 @@
 ;; configuration for editing html/xhtml...
-(add-hook 'sgml-mode-hook
-	  (lambda ()
-	    (yas-reload-all)
-	    (yas-minor-mode 1)))
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))

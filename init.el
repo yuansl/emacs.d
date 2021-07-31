@@ -70,18 +70,11 @@
 
 (setq use-package-always-ensure t)
 
-(defun enable-emoji ()
-  (when (string= system-type "darwin")
-    (if (< emacs-major-version 27)
-	(set-fontset-font
-	 "fontset-default" 'unicode "Apple Color Emoji" nil 'prepend)
-      (set-fontset-font
-       t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend))))
-
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
 			     (global-company-mode)
-			     (which-key-mode)))
+			     (which-key-mode)
+			     (yas-reload-all)))
 
 (use-package company
   :init
@@ -116,7 +109,6 @@
 
 (use-package yasnippet
   :config
-  (yas-reload-all)
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 
 ;; load initialization for c programming language and html mode
