@@ -1,8 +1,5 @@
 ;; configuration for editing html/xhtml...
 
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-
 (add-hook 'text-mode-hook
 	  (lambda ()
 	    (setq fill-column 80)

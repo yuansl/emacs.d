@@ -32,7 +32,7 @@
  '(large-file-warning-threshold 2000000)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(magit yasnippet-snippets which-key bui go-dlv editorconfig markdown-toc flycheck-kotlin kotlin-mode lsp lua-mode protobuf-mode projectile-speedbar projectile go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(dap-mode magit yasnippet-snippets which-key bui go-dlv editorconfig markdown-toc lsp lua-mode protobuf-mode projectile-speedbar projectile go-impl scala-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
