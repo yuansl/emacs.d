@@ -76,6 +76,10 @@
 			     (which-key-mode)
 			     (yas-reload-all)))
 
+(add-hook 'server-switch-hook
+	  (lambda ()
+	    (select-frame-set-input-focus (selected-frame))))
+
 (use-package company
   :init
   (set-variable 'company-backends '(company-capf company-dabbrev company-dabbrev-code company-files company-keywords
