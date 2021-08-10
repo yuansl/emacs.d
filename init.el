@@ -9,7 +9,8 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
-
+(add-to-list 'default-frame-alist
+	     '(font . "Monospace:pixelsize=14"))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
