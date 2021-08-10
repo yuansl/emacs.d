@@ -70,16 +70,17 @@
 
 (setq use-package-always-ensure t)
 
+(defun raise-frame-if-possible ()
+  (add-hook 'server-switch-hook
+	    (lambda ()
+	      (select-frame-set-input-focus (selected-frame)))))
+
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
 			     (global-company-mode)
 			     (which-key-mode)
-			     (yas-reload-all)))
-
-(if (not (string= window-system 'ns))
-    (add-hook 'server-switch-hook
-	      (lambda ()
-		(select-frame-set-input-focus (selected-frame)))))
+			     (yas-reload-all)
+			     (raise-frame-if-possible)))
 
 (use-package company
   :init
