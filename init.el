@@ -76,9 +76,10 @@
 			     (which-key-mode)
 			     (yas-reload-all)))
 
-(add-hook 'server-switch-hook
-	  (lambda ()
-	    (select-frame-set-input-focus (selected-frame))))
+(if (not (string= window-system 'ns))
+    (add-hook 'server-switch-hook
+	      (lambda ()
+		(select-frame-set-input-focus (selected-frame)))))
 
 (use-package company
   :init
