@@ -9,8 +9,23 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
-(add-to-list 'default-frame-alist
-	     '(font . "Monospace:pixelsize=14"))
+(when (not (string= system-type "darwin"))
+  (add-to-list 'default-frame-alist
+	       '(font . "Monospace:pixelsize=14"))
+  (menu-bar-mode 0))
+
+;; (global-hl-line-mode t)
+;; This is an emacs elpa mirror from china: CST:China Standard Time
+(if (equal (car (cdr (current-time-zone))) "CST")
+    (setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			     ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(when (< emacs-major-version 27)
+  (package-initialize))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -38,21 +53,6 @@
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
-
-(unless (string= system-type "darwin")
-   (menu-bar-mode 0))
-
-;; (global-hl-line-mode t)
-;; This is an emacs elpa mirror from china: CST:China Standard Time
-(if (equal (car (cdr (current-time-zone))) "CST")
-    (setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			     ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(when (< emacs-major-version 27)
-  (package-initialize))
 
 ;; if `use-package' does not exist, then refresh package contents from (m)elpa
 ;; and install selected packages
