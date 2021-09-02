@@ -57,6 +57,10 @@
 ;; if `use-package' does not exist, then refresh package contents from (m)elpa
 ;; and install selected packages
 ;; (package-refresh-contents t)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
 
 (use-package which-key
   :commands which-key-mode)
@@ -64,10 +68,6 @@
 (use-package find-file-in-repository
   :config
   (global-set-key (kbd "C-x f") 'find-file-in-repository))
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
 
 (setq use-package-always-ensure t)
 
