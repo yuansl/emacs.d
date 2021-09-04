@@ -54,23 +54,6 @@
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
 
-;; if `use-package' does not exist, then refresh package contents from (m)elpa
-;; and install selected packages
-;; (package-refresh-contents t)
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(require 'use-package)
-
-(use-package which-key
-  :commands which-key-mode)
-
-(use-package find-file-in-repository
-  :config
-  (global-set-key (kbd "C-x f") 'find-file-in-repository))
-
-(setq use-package-always-ensure t)
-
 (defun raise-frame-if-possible ()
   (if  (not (string= system-type "darwin"))
       (add-hook 'server-switch-hook
@@ -81,14 +64,18 @@
 			     (global-auto-revert-mode t)
 			     (global-company-mode)
 			     (which-key-mode)
-			     (yas-reload-all)
 			     (raise-frame-if-possible)))
+;; load packages using package.el
+(setq use-package-always-ensure t)
+
+(use-package which-key
+  :commands which-key-mode)
+
+(use-package find-file-in-repository
+  :config
+  (global-set-key (kbd "C-x f") 'find-file-in-repository))
 
 (use-package company
-  :init
-  (set-variable 'company-backends '(company-capf company-dabbrev company-dabbrev-code company-files company-keywords
-	      (company-clang company-gtags company-etags company-cmake company-semantic)
-	        company-bbdb company-oddmuse))
   :config
   (setq company-minimum-prefix-length 1
       company-idle-delay 0.0))
