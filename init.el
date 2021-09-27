@@ -54,17 +54,6 @@
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
 
-(defun raise-frame-if-possible ()
-  (if  (not (string= system-type "darwin"))
-      (add-hook 'server-switch-hook
-		(lambda ()
-		  (select-frame-set-input-focus (selected-frame))))))
-
-(add-hook 'after-init-hook (lambda ()
-			     (global-auto-revert-mode t)
-			     (global-company-mode)
-			     (which-key-mode)
-			     (raise-frame-if-possible)))
 ;; load packages using package.el
 (setq use-package-always-ensure t)
 
@@ -112,6 +101,31 @@
 (require 'init-c)
 (require 'init-go)
 (require 'init-python)
+
+(defun raise-frame-if-possible ()
+  (if  (not (string= system-type "darwin"))
+      (add-hook 'server-switch-hook
+		(lambda ()
+		  (select-frame-set-input-focus (selected-frame))))))
+
+(add-hook 'after-init-hook (lambda ()
+			     (global-auto-revert-mode t)
+			     (global-company-mode)
+			     (which-key-mode)
+			     (raise-frame-if-possible)))
+
+(defun json-validator ()
+  (condition-case nil
+      (json-parse-string
+       (replace-regexp-in-string
+	"{{.*}}" "0"
+	(buffer-substring-no-properties (point-min) (point-max))))
+    (debug error "ill-formed json"))
+  nil)
+
+(add-hook 'js-mode-hook
+	  (lambda ()
+	    (add-hook 'write-file-functions 'json-validator nil t)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
