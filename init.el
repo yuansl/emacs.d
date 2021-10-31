@@ -69,7 +69,7 @@
 
 (use-package lsp-mode
   :init
-  (setq lsp-diagnostic-package :auto)
+  (setq lsp-diagnostics-provider :auto)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-keymap-prefix "C-c l")
   :commands (lsp lsp-deferred))
@@ -118,7 +118,7 @@
        (replace-regexp-in-string
 	"{{.*}}" "0"
 	(buffer-substring-no-properties (point-min) (point-max))))
-    (debug error "ill-formed json"))
+    (debug "ill-formed json"))
   nil)
 
 (add-hook 'js-mode-hook
