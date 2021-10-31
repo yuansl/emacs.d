@@ -10,8 +10,6 @@
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
 (when (not (string= system-type "darwin"))
-  (add-to-list 'default-frame-alist
-	       '(font . "Monospace:pixelsize=14"))
   (menu-bar-mode 0))
 
 ;; (global-hl-line-mode t)
