@@ -15,8 +15,8 @@
 ;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
-    (setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			     ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+    (setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
+			     ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/"))))
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
