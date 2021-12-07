@@ -9,8 +9,6 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
-(when (not (string= system-type "darwin"))
-  (menu-bar-mode 0))
 
 ;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
@@ -44,9 +42,11 @@
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
  '(large-file-warning-threshold 2000000)
+ '(menu-bar-mode nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
    '(yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+ '(save-place-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
