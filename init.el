@@ -112,10 +112,6 @@
 			     (which-key-mode)
 			     (raise-frame-if-possible)))
 
-(defun reset-font ()
-  (interactive)
-  (set-frame-font "Monospace-10:pixelsize=14"))
-
 (defun json-validator ()
   (condition-case nil
       (json-parse-string
