@@ -2,11 +2,6 @@
   :config
   (add-hook 'go-mode-hook #'flycheck-mode))
 
-(use-package yasnippet
-  :ensure t
-  :commands yas-minor-mode
-  :hook (go-mode . yas-minor-mode))
-
 (add-hook 'go-mode-hook (lambda ()
 			  (subword-mode)
 			  (setq gofmt-command "goimports")
