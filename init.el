@@ -125,6 +125,12 @@
 	  (lambda ()
 	    (add-hook 'write-file-functions 'json-validator nil t)))
 
+(defun reset-font (&optional pixelsize)
+  (interactive)
+  (if (not (equal pixelsize nil))
+      (set-frame-font (format "Mono-10:pixelsize=%d" pixelsize))
+    (set-frame-font "Mono-10:pixelsize=14")))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
