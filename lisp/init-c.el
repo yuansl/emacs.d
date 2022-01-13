@@ -17,9 +17,6 @@
 ;(require 'bison-mode)
 (add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
 
-(use-package lsp-mode
-  :config
-  (add-hook 'c-mode-common-hook #'lsp-deferred))
 
 (use-package company-c-headers
   :commands company-c-headers)

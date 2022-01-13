@@ -45,7 +45,7 @@
  '(menu-bar-mode nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(rustic rust-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(lsp-mode rustic rust-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
@@ -67,19 +67,6 @@
   (setq company-minimum-prefix-length 1
       company-idle-delay 0.0))
 
-(use-package lsp-mode
-  :init
-  (setq lsp-diagnostics-provider :auto)
-  (setq lsp-enable-file-watchers nil)
-  (setq lsp-keymap-prefix "C-c l")
-  :commands (lsp lsp-deferred))
-
-;; optional - provides fancier overlays
-(use-package lsp-ui
-  :init
-  (setq lsp-ui-doc-enable nil)
-  :commands lsp-ui-mode)
-
 (use-package sql-indent
   :init
   (setq sql-indent-offset 8))
@@ -99,6 +86,28 @@
 (require 'init-c)
 (require 'init-go)
 (require 'init-python)
+
+(use-package lsp-mode
+  :init
+  (setq lsp-diagnostics-provider :auto)
+  (setq lsp-enable-file-watchers nil)
+  (setq lsp-keymap-prefix "C-c l")
+  :commands (lsp lsp-deferred))
+
+(use-package lsp-mode
+  :config
+  (add-hook 'c-mode-hook #'lsp-deferred)
+  (add-hook 'c++-mode-hook #'lsp-deferred)
+  (add-hook 'python-mode-hook #'lsp-deferred)
+  (add-hook 'go-mode-hook #'lsp-deferred))
+
+(use-package lsp-ui
+  :init
+  (setq lsp-ui-doc-enable nil)
+  :config
+  (add-hook 'go-mode-hook (lambda()
+			    (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)))
+  :commands lsp-ui-mode)
 
 (defun raise-frame-if-possible ()
   (if  (not (string= system-type "darwin"))

@@ -9,13 +9,5 @@
 			  (if (not (string-match "go" compile-command))
 			      (set (make-local-variable 'compile-command)
 				   "go vet && go test -v"))))
-(use-package lsp-ui
-  :config
-  (add-hook 'go-mode-hook (lambda()
-			    (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))))
-
-(use-package lsp-mode
-  :config
-  (add-hook 'go-mode-hook #'lsp-deferred))
 
 (provide 'init-go)
