@@ -65,7 +65,11 @@
 (use-package company
   :config
   (setq company-minimum-prefix-length 1
-      company-idle-delay 0.0))
+	company-idle-delay 0.0)
+  (add-hook
+   'c-mode-common-hook (lambda ()
+			 ;; we use lsp/clangd for code complete
+			 (delete 'company-clang company-backends))))
 
 (use-package sql-indent
   :init
@@ -89,6 +93,7 @@
 
 (use-package lsp-mode
   :init
+  (setq lsp-enable-indentation nil)
   (setq lsp-diagnostics-provider :auto)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-keymap-prefix "C-c l")
@@ -96,8 +101,7 @@
 
 (use-package lsp-mode
   :config
-  (add-hook 'c-mode-hook #'lsp-deferred)
-  (add-hook 'c++-mode-hook #'lsp-deferred)
+  (add-hook 'c-mode-common-hook #'lsp-deferred)
   (add-hook 'python-mode-hook #'lsp-deferred)
   (add-hook 'go-mode-hook #'lsp-deferred))
 
