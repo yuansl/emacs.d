@@ -55,8 +55,7 @@
 ;; load packages using package.el
 (setq use-package-always-ensure t)
 
-(use-package which-key
-  :commands which-key-mode)
+(use-package which-key)
 
 (use-package find-file-in-repository
   :config
@@ -64,12 +63,10 @@
 
 (use-package company
   :config
+  ;; we use lsp/clangd for code complete
+  (delete 'company-clang company-backends)
   (setq company-minimum-prefix-length 1
-	company-idle-delay 0.0)
-  (add-hook
-   'c-mode-common-hook (lambda ()
-			 ;; we use lsp/clangd for code complete
-			 (delete 'company-clang company-backends))))
+	company-idle-delay 0.0))
 
 (use-package sql-indent
   :init
@@ -77,8 +74,7 @@
 
 (use-package markdown-mode
   :ensure t
-  :mode ("\\.md\\'" . gfm-mode)
-  :commands (markdown-mode gfm-mode))
+  :mode ("\\.md\\'" . gfm-mode))
 
 (use-package yasnippet
   :config
@@ -97,9 +93,6 @@
   (setq lsp-diagnostics-provider :auto)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-keymap-prefix "C-c l")
-  :commands (lsp lsp-deferred))
-
-(use-package lsp-mode
   :config
   (add-hook 'c-mode-common-hook #'lsp-deferred)
   (add-hook 'python-mode-hook #'lsp-deferred)
@@ -109,9 +102,9 @@
   :init
   (setq lsp-ui-doc-enable nil)
   :config
-  (add-hook 'go-mode-hook (lambda()
-			    (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)))
-  :commands lsp-ui-mode)
+  (add-hook 'go-mode-hook
+	    (lambda ()
+	      (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))))
 
 (defun raise-frame-if-possible ()
   (if  (not (string= system-type "darwin"))
