@@ -34,7 +34,7 @@
  '(column-number-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
- '(icomplete-mode t)
+ '(fido-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
  '(ido-mode 'both nil (ido))
