@@ -7,14 +7,4 @@
 	    (setq bidi-display-reordering nil)
 	    (setq line-move-visual nil)))
 
-(defun --set-emoji-font nil
-  "Adjust the font settings of FRAME so Emacs can display emoji properly."
-  (if (eq system-type 'darwin)
-      ;; For NS/Cocoa
-      (set-fontset-font t 'symbol (font-spec :family "Apple Color Emoji") nil 'prepend)
-    ;; For Linux
-    (set-fontset-font t 'symbol (font-spec :family "Symbola") nil 'prepend)))
-
-(add-hook 'after-init-hook '--set-emoji-font)
-
 (provide 'init-text)

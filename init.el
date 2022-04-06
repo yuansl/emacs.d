@@ -45,7 +45,7 @@
  '(menu-bar-mode nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(lsp-mode rustic rust-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(lsp-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
