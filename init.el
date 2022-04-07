@@ -1,6 +1,8 @@
 ;; alias
-(defalias 'yes-or-no-p 'y-or-n-p)
 (defalias 'list-buffers 'ibuffer)
+
+;; make 'y-or-n-p a short version of 'yes-or-no-p
+(setq use-short-answers t)
 
 ;; frame-title-format:
 ;; `%F': frame-name
@@ -44,13 +46,15 @@
  '(large-file-warning-threshold 2000000)
  '(menu-bar-mode nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
+ '(package-native-compile t)
  '(package-selected-packages
    '(lsp-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
- '(tooltip-mode nil))
+ '(tooltip-mode nil)
+ '(warning-suppress-log-types '((comp))))
 
 ;; load packages using package.el
 (setq use-package-always-ensure t)
