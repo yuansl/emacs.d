@@ -9,15 +9,15 @@
 	  (lambda ()
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
+	    (if (featurep 'clang-format)
+		(setq indent-region-function 'clang-format))
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))))
 
-;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
-;(require 'bison-mode)
+
+;;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
+;;(require 'bison-mode)
 (add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
 
-
-(use-package company-c-headers
-  :commands company-c-headers)
 
 (provide 'init-c)

@@ -49,7 +49,7 @@
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-native-compile t)
  '(package-selected-packages
-   '(lsp-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(clang-format lsp-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
@@ -85,12 +85,7 @@
   :config
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 
-;; load initialization for c programming language and html mode
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(require 'init-text)
-(require 'init-c)
-(require 'init-go)
-(require 'init-python)
+(use-package clang-format)
 
 (use-package lsp-mode
   :init
@@ -110,6 +105,16 @@
   (add-hook 'go-mode-hook
 	    (lambda ()
 	      (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))))
+
+(use-package company-c-headers
+  :commands company-c-headers)
+
+;; load initialization for c programming language and html mode
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(require 'init-text)
+(require 'init-c)
+(require 'init-go)
+(require 'init-python)
 
 (defun raise-frame-if-possible ()
   (if  (not (string= system-type "darwin"))
@@ -141,6 +146,13 @@
   (if (not (equal pixelsize nil))
       (set-frame-font (format "Mono-10:pixelsize=%d" pixelsize))
     (set-frame-font "Mono-10:pixelsize=14")))
+
+(defun indent-buffer ()
+  (indent-region (point-min) (point-max)))
+
+(add-hook 'prog-mode-hook
+	  (lambda ()
+	    (add-hook 'before-save-hook 'indent-buffer -1 t)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
