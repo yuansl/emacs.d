@@ -9,8 +9,6 @@
 	  (lambda ()
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
-	    (if (featurep 'clang-format)
-		(setq indent-region-function 'clang-format))
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))))
 

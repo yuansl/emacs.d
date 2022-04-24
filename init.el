@@ -139,7 +139,8 @@
 
 (add-hook 'js-mode-hook
 	  (lambda ()
-	    (add-hook 'write-file-functions 'json-validator nil t)))
+	    (if (string-suffix-p "json" (file-name-extension (buffer-name)))
+		(add-hook 'write-file-functions #'json-validator nil t))))
 
 (defun reset-font (&optional pixelsize)
   (interactive)
@@ -148,11 +149,14 @@
     (set-frame-font "Mono-10:pixelsize=14")))
 
 (defun indent-buffer ()
+  (if (featurep 'clang-format)
+      (when (derived-mode-p 'c-mode 'c++-mode 'js-mode 'java-mode 'protobuf-mode)
+	(setq indent-region-function 'clang-format)))
   (indent-region (point-min) (point-max)))
 
 (add-hook 'prog-mode-hook
 	  (lambda ()
-	    (add-hook 'before-save-hook 'indent-buffer -1 t)))
+	    (add-hook 'before-save-hook 'indent-buffer 0 t)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
