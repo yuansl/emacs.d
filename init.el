@@ -2,7 +2,7 @@
 (defalias 'list-buffers 'ibuffer)
 
 ;; make 'y-or-n-p a short version of 'yes-or-no-p
-(setq use-short-answers t)
+(setq-default use-short-answers t)
 
 ;; frame-title-format:
 ;; `%F': frame-name
