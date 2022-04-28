@@ -12,6 +12,8 @@
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
 
+(global-set-key (kbd "C-x f") 'project-find-file)
+
 ;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
@@ -49,7 +51,7 @@
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-native-compile t)
  '(package-selected-packages
-   '(clang-format lsp-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package find-file-in-repository flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(clang-format lsp-mode yasnippet-snippets which-key bui go-dlv markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(show-paren-mode t)
  '(size-indication-mode t)
@@ -61,10 +63,6 @@
 (setq use-package-always-ensure t)
 
 (use-package which-key)
-
-(use-package find-file-in-repository
-  :config
-  (global-set-key (kbd "C-x f") 'find-file-in-repository))
 
 (use-package company
   :config
