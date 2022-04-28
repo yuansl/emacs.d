@@ -4,6 +4,8 @@
 ;; make 'y-or-n-p a short version of 'yes-or-no-p
 (setq-default use-short-answers t)
 
+(setq-default use-dialog-box nil)
+
 ;; frame-title-format:
 ;; `%F': frame-name
 ;; `%@': '@'(if at a remote machine) or '-'(if at localhost)
