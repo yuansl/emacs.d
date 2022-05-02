@@ -16,17 +16,10 @@
 
 (global-set-key (kbd "C-x f") 'project-find-file)
 
-;; (global-hl-line-mode t)
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
     (setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
 			     ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/"))))
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(when (< emacs-major-version 27)
-  (package-initialize))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -89,10 +82,7 @@
 
 (use-package lsp-mode
   :init
-  (setq lsp-enable-indentation nil)
-  (setq lsp-diagnostics-provider :auto)
   (setq lsp-enable-file-watchers nil)
-  (setq lsp-keymap-prefix "C-c l")
   :config
   (add-hook 'c-mode-common-hook #'lsp-deferred)
   (add-hook 'python-mode-hook #'lsp-deferred)
@@ -104,7 +94,8 @@
   :config
   (add-hook 'go-mode-hook
 	    (lambda ()
-	      (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))))
+	      (define-key lsp-ui-mode-map
+		[remap xref-find-references] #'lsp-ui-peek-find-references))))
 
 (use-package company-c-headers
   :commands company-c-headers)
@@ -150,7 +141,8 @@
 
 (defun indent-buffer ()
   (if (featurep 'clang-format)
-      (when (derived-mode-p 'c-mode 'c++-mode 'js-mode 'java-mode 'protobuf-mode)
+      (when (derived-mode-p
+	     'c-mode 'c++-mode 'js-mode 'java-mode 'protobuf-mode)
 	(setq indent-region-function 'clang-format)))
   (indent-region (point-min) (point-max)))
 

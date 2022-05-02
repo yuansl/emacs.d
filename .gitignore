@@ -19,5 +19,9 @@ diary
 .lsp-session*
 .cache
 projectile-bookmarks.eld
-.dap-breakpoints
+**/.dap-breakpoints/*
 github
+places
+**/.extension/*
+projects
+**/*cache*/*
