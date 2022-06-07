@@ -44,6 +44,7 @@
  '(menu-bar-mode nil)
  '(mode-line-compact 'long)
  '(mouse-avoidance-mode 'animate nil (avoid))
+ '(org-agenda-files '("/home/yuansl/profile/notes.org"))
  '(package-native-compile t)
  '(package-selected-packages
    '(clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
@@ -148,7 +149,8 @@
 
 (add-hook 'prog-mode-hook
 	  (lambda ()
-	    (add-hook 'before-save-hook 'indent-buffer 0 t)))
+	    (when (not (derived-mode-p 'makefile-mode))
+	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
