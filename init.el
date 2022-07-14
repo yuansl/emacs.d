@@ -144,7 +144,7 @@
   (if (featurep 'clang-format)
       (when (derived-mode-p
 	     'c-mode 'c++-mode 'js-mode 'java-mode 'protobuf-mode)
-	(setq indent-region-function 'clang-format)))
+	(setq-local indent-region-function 'clang-format)))
   (indent-region (point-min) (point-max)))
 
 (add-hook 'prog-mode-hook
