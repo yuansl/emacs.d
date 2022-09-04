@@ -13,6 +13,7 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
+(setq-default default-frame-alist '((font . "Monospace-10.5")))
 
 (global-set-key (kbd "C-x f") 'project-find-file)
 
@@ -44,12 +45,11 @@
  '(menu-bar-mode nil)
  '(mode-line-compact 'long)
  '(mouse-avoidance-mode 'animate nil (avoid))
- '(org-agenda-files '("/home/yuansl/profile/notes.org"))
+ '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
    '(clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
- '(show-paren-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil)
@@ -96,7 +96,7 @@
   (add-hook 'go-mode-hook
 	    (lambda ()
 	      (define-key lsp-ui-mode-map
-		[remap xref-find-references] #'lsp-ui-peek-find-references))))
+			  [remap xref-find-references] #'lsp-ui-peek-find-references))))
 
 (use-package company-c-headers
   :commands company-c-headers)
@@ -152,11 +152,5 @@
 	    (when (not (derived-mode-p 'makefile-mode))
 	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
