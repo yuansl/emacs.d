@@ -24,3 +24,6 @@ github
 places
 projects
 **/*cache*/*
+games/
+multisession/
+transient/
