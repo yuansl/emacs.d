@@ -34,7 +34,7 @@
  '(column-number-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
- '(fido-mode t)
+ '(fido-vertical-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
  '(ido-mode 'both nil (ido))
@@ -88,6 +88,7 @@
 (use-package lsp-mode
   :init
   (setq lsp-enable-file-watchers nil)
+  (setq gc-cons-threshold 100000000)	; 100MB
   :config
   (add-hook 'c-mode-common-hook #'lsp-deferred)
   (add-hook 'python-mode-hook #'lsp-deferred)
