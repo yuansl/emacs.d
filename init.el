@@ -113,17 +113,10 @@
 (require 'init-go)
 (require 'init-python)
 
-(defun raise-frame-if-possible ()
-  (if  (not (string= system-type "darwin"))
-      (add-hook 'server-switch-hook
-		(lambda ()
-		  (select-frame-set-input-focus (selected-frame))))))
-
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
 			     (global-company-mode)
-			     (which-key-mode)
-			     (raise-frame-if-possible)))
+			     (which-key-mode)))
 
 (defun json-validator ()
   (condition-case nil
