@@ -12,10 +12,17 @@
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))))
 
+(use-package lsp-mode
+  :config
+  (add-hook 'c-mode-common-hook #'lsp-deferred))
 
 ;;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
 ;;(require 'bison-mode)
 (add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
 
+(use-package company-c-headers
+  :commands company-c-headers)
+
+(use-package clang-format)
 
 (provide 'init-c)
