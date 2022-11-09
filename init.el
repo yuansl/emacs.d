@@ -89,6 +89,7 @@
   :init
   (setq lsp-enable-file-watchers nil)
   (setq gc-cons-threshold 100000000)	; 100MB
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
   :config
   (add-hook 'c-mode-common-hook #'lsp-deferred)
   (add-hook 'python-mode-hook #'lsp-deferred)
