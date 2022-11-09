@@ -48,7 +48,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(rust-mode gtags-mode magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -71,6 +71,12 @@
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.0))
 
+(use-package lsp-mode
+  :init
+  (setq read-process-output-max (* 1024 1024)) ; 1MiB
+  (setq lsp-enable-file-watchers nil)
+  (setq gc-cons-threshold 100000000))	; 100MB
+
 (use-package sql-indent
   :init
   (setq sql-indent-offset 8))
@@ -82,30 +88,6 @@
 (use-package yasnippet
   :config
   (add-hook 'prog-mode-hook #'yas-minor-mode))
-
-(use-package clang-format)
-
-(use-package lsp-mode
-  :init
-  (setq lsp-enable-file-watchers nil)
-  (setq gc-cons-threshold 100000000)	; 100MB
-  (setq read-process-output-max (* 1024 1024)) ;; 1mb
-  :config
-  (add-hook 'c-mode-common-hook #'lsp-deferred)
-  (add-hook 'python-mode-hook #'lsp-deferred)
-  (add-hook 'go-mode-hook #'lsp-deferred))
-
-(use-package lsp-ui
-  :init
-  (setq lsp-ui-doc-enable nil)
-  :config
-  (add-hook 'go-mode-hook
-	    (lambda ()
-	      (define-key lsp-ui-mode-map
-			  [remap xref-find-references] #'lsp-ui-peek-find-references))))
-
-(use-package company-c-headers
-  :commands company-c-headers)
 
 ;; load initialization for c programming language and html mode
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
