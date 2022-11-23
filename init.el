@@ -74,8 +74,7 @@
 (use-package lsp-mode
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
-  (setq lsp-enable-file-watchers nil)
-  (setq gc-cons-threshold 100000000))	; 100MB
+  (setq lsp-enable-file-watchers nil))
 
 (use-package sql-indent
   :init
@@ -90,7 +89,7 @@
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 
 ;; load initialization for c programming language and html mode
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "elpa" user-emacs-directory))
 (require 'init-text)
 (require 'init-c)
 (require 'init-go)
