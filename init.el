@@ -53,6 +53,7 @@
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil)
+ '(global-so-long-mode t)
  '(warning-suppress-log-types '((comp))))
 
 ;; load packages using package.el
