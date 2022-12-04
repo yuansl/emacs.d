@@ -34,10 +34,10 @@
  '(column-number-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
- '(fido-vertical-mode t)
+ '(global-so-long-mode t)
+ '(ido-mode 'both nil (ido))
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
- '(ido-mode 'both nil (ido))
  '(ido-use-filename-at-point t)
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
@@ -48,16 +48,20 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(rust-mode gtags-mode magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(helm rust-mode gtags-mode magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil)
- '(global-so-long-mode t)
  '(warning-suppress-log-types '((comp))))
 
 ;; load packages using package.el
 (setq use-package-always-ensure t)
+
+(use-package helm
+  :config
+  (setq completion-styles '(flex))
+  (global-set-key (kbd "M-x") 'helm-M-x))
 
 (use-package which-key)
 
@@ -99,7 +103,8 @@
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
 			     (global-company-mode)
-			     (which-key-mode)))
+			     (which-key-mode)
+			     (helm-mode)))
 
 (defun json-validator ()
   (condition-case nil
