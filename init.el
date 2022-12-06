@@ -34,7 +34,7 @@
  '(column-number-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
- '(fido-vertical-mode t)
+ ;; '(fido-vertical-mode t)
  '(global-so-long-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
@@ -49,7 +49,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(rust-mode magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(helm rust-mode magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -58,6 +58,15 @@
 
 ;; load packages using package.el
 (setq use-package-always-ensure t)
+
+(use-package helm
+  :config
+  (setq completion-styles '(flex))
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x C-f") #'helm-find-files)
+  :init
+  (helm-mode))
+
 
 (use-package which-key)
 
