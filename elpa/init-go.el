@@ -12,13 +12,10 @@
   :config
   (add-hook 'go-mode-hook
 	    (lambda ()
+	      (flymake-mode)
 	      (define-key lsp-ui-mode-map
 			  [remap xref-find-references] #'lsp-ui-peek-find-references)
 	      (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))))
-
-(use-package flycheck
-  :config
-  (add-hook 'go-mode-hook #'flycheck-mode))
 
 (use-package lsp-mode
   :config
