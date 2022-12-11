@@ -8,7 +8,8 @@
 (use-package lsp-ui
   :config
   (add-hook 'rust-mode-hook (lambda()
-			    (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))))
+			      (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+			      (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))))
 
 (use-package lsp-mode
   :config

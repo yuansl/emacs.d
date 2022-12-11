@@ -35,6 +35,7 @@
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(global-so-long-mode t)
+ '(helm-display-buffer-height 10)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
  '(ido-mode 'both nil (ido))
@@ -48,7 +49,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(go-playground helm rust-mode magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
+   '(go-playground rust-mode magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package flycheck yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -59,31 +60,31 @@
 (setq use-package-always-ensure t)
 
 (use-package helm
-  :config
-  (setq completion-styles '(flex))
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") #'helm-find-files)
+  :ensure t
+  :commands
+  (helm-mode)
   :init
-  (helm-mode))
+  (setq completion-styles '(flex))
+  :bind
+  ("C-x C-f" . helm-find-files)
+  :bind
+  ("M-x" . helm-M-x))
 
-
-(use-package which-key)
+(use-package which-key
+  :ensure t)
 
 (use-package magit
+  :ensure t
   :config
-  (global-set-key (kbd "C-x g") #'magit-status))
+  (define-key magit-mode-map (kbd "C-x g") #'magit-status))
 
 (use-package company
+  :ensure t
   :config
   ;; we use lsp/clangd for code complete
   (delete 'company-clang company-backends)
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.0))
-
-(use-package lsp-mode
-  :init
-  (setq read-process-output-max (* 1024 1024)) ; 1MiB
-  (setq lsp-enable-file-watchers nil))
 
 (use-package sql-indent
   :init
@@ -96,6 +97,15 @@
 (use-package yasnippet
   :config
   (add-hook 'prog-mode-hook #'yas-minor-mode))
+
+(use-package lsp-ui
+  :ensure t)
+
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq read-process-output-max (* 1024 1024)) ; 1MiB
+  (setq lsp-enable-file-watchers nil))
 
 ;; load initialization for c programming language and html mode
 (add-to-list 'load-path (expand-file-name "elpa" user-emacs-directory))

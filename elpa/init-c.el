@@ -7,14 +7,11 @@
 
 (add-hook 'c-mode-common-hook
 	  (lambda ()
+	    (eglot-ensure)
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))))
-
-(use-package lsp-mode
-  :config
-  (add-hook 'c-mode-common-hook #'lsp-deferred))
 
 ;;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
 ;;(require 'bison-mode)

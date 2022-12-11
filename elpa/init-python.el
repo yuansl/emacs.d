@@ -2,6 +2,4 @@
 ;; run: sudo snap install pylsp
 (provide 'init-python)
 
-(use-package lsp-mode
-  :config
-  (add-hook 'python-mode-hook #'lsp-deferred))
+(add-hook 'python-mode-hook #'eglot-ensure)
