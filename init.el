@@ -61,14 +61,14 @@
 
 (use-package helm
   :ensure t
-  :commands
-  (helm-mode)
   :init
   (setq completion-styles '(flex))
   :bind
   ("C-x C-f" . helm-find-files)
   :bind
-  ("M-x" . helm-M-x))
+  ("M-x" . helm-M-x)
+  :config
+  (helm-mode))
 
 (use-package which-key
   :ensure t)
