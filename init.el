@@ -35,7 +35,6 @@
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(global-so-long-mode t)
- '(helm-display-buffer-height 10)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
  '(ido-mode 'both nil (ido))
@@ -61,7 +60,6 @@
 (setq use-package-always-ensure t)
 
 (use-package helm
-  :ensure t
   :init
   (setq completion-styles '(flex))
   :bind
@@ -71,16 +69,13 @@
   :config
   (helm-mode))
 
-(use-package which-key
-  :ensure t)
+(use-package which-key)
 
 (use-package magit
-  :ensure t
   :config
   (define-key magit-mode-map (kbd "C-x g") #'magit-status))
 
 (use-package company
-  :ensure t
   :config
   ;; we use lsp/clangd for code complete
   (delete 'company-clang company-backends)
@@ -88,24 +83,22 @@
 	company-idle-delay 0.0))
 
 (use-package sql-indent
-  :init
+  :config
   (setq sql-indent-offset 8))
 
 (use-package markdown-mode
-  :ensure t
   :mode ("\\.md\\'" . gfm-mode))
 
 (use-package yasnippet
   :config
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 
-(use-package lsp-ui
-  :ensure t)
+(use-package lsp-ui)
 
 (use-package lsp-mode
-  :ensure t
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
+  :config
   (setq lsp-enable-file-watchers nil))
 
 ;; load initialization for c programming language and html mode
