@@ -56,6 +56,7 @@
  '(tooltip-mode nil)
  '(warning-suppress-log-types '((comp))))
 
+(require 'use-package)
 ;; load packages using package.el
 (setq use-package-always-ensure t)
 
