@@ -5,7 +5,8 @@
 			  (if (not (string-match "go" compile-command))
 			      (set (make-local-variable 'compile-command)
 				   "go vet && go test -v -failfast"))))
-
+(use-package go-mode)
+(use-package go-playground)
 (use-package lsp-ui
   :init
   (setq lsp-ui-doc-enable nil)

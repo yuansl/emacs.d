@@ -47,8 +47,6 @@
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(org-agenda-files nil)
  '(package-native-compile t)
- '(package-selected-packages
-   '(helm go-playground rust-mode magit clang-format lsp-mode yasnippet-snippets which-key bui markdown-toc lsp lua-mode protobuf-mode go-mode lsp-ui use-package yaml-mode company-c-headers markdown-mode yasnippet sql-indent company))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -71,10 +69,6 @@
 
 (use-package which-key)
 
-(use-package magit
-  :config
-  (define-key magit-mode-map (kbd "C-x g") #'magit-status))
-
 (use-package company
   :config
   ;; we use lsp/clangd for code complete
@@ -82,24 +76,38 @@
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.0))
 
+(add-hook 'after-init-hook (lambda ()
+			     (global-auto-revert-mode t)
+			     (global-company-mode)
+			     (which-key-mode)))
+
+(use-package magit
+  :config
+  (define-key magit-mode-map (kbd "C-x g") #'magit-status))
+
 (use-package sql-indent
   :config
   (setq sql-indent-offset 8))
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode))
+(use-package markdown-toc)
 
 (use-package yasnippet
   :config
   (add-hook 'prog-mode-hook #'yas-minor-mode))
+(use-package yasnippet-snippets)
 
 (use-package lsp-ui)
-
 (use-package lsp-mode
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
   (setq lsp-enable-file-watchers nil))
+
+(use-package yaml-mode)
+
+(use-package )
 
 ;; load initialization for c programming language and html mode
 (add-to-list 'load-path (expand-file-name "elpa" user-emacs-directory))
@@ -107,11 +115,6 @@
 (require 'init-c)
 (require 'init-go)
 (require 'init-python)
-
-(add-hook 'after-init-hook (lambda ()
-			     (global-auto-revert-mode t)
-			     (global-company-mode)
-			     (which-key-mode)))
 
 (defun json-validator ()
   (condition-case nil
