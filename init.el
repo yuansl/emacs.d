@@ -42,6 +42,7 @@
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
  '(large-file-warning-threshold 2000000)
+ '(menu-bar-mode nil)
  '(mode-line-compact 'long)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(org-agenda-files nil)
