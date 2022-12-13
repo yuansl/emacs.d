@@ -47,6 +47,8 @@
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(org-agenda-files nil)
  '(package-native-compile t)
+ '(package-selected-packages
+   '(lsp lsp-ui lsp-mode go-playground clang-format company-c-headers magit which-key company gotest yaml-mode sql-indent yasnippet-snippets bind-key markdown-toc helm))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -71,7 +73,7 @@
 
 (use-package company
   :config
-  ;; we use lsp/clangd for code complete
+  ;; we use clangd for code complete
   (delete 'company-clang company-backends)
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.0))
@@ -98,23 +100,72 @@
   (add-hook 'prog-mode-hook #'yas-minor-mode))
 (use-package yasnippet-snippets)
 
-(use-package lsp-ui)
+;; configuration for golang programming language
+(use-package go-mode
+  :hook ((go-mode) . (lambda ()
+		       (subword-mode)
+		       (setq gofmt-command "goimports")
+		       (add-hook 'before-save-hook 'gofmt-before-save nil t)
+		       (if (not (string-match "go" compile-command))
+			   (set (make-local-variable 'compile-command)
+				"go vet && go test -v -failfast")))))
+(use-package go-playground)
+
 (use-package lsp-mode
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
-  (setq lsp-enable-file-watchers nil))
+  (setq lsp-auto-guess-root t)
+  (setq lsp-enable-file-watchers nil)
+  ;; rust mode support
+  ;; ```
+  ;; snap install rustup
+  ;; rustup install stable
+  ;; rustup default stable
+  ;; rustup component add rust-src rust-analysis
+  ;; ```
+  :hook ((go-mode rust-mode) . #'lsp-deferred))
+
+(use-package lsp-ui
+  :config
+  (setq lsp-ui-doc-enable nil)
+  :hook ((go-mode rust-mode) . (lambda ()
+				 (define-key lsp-ui-mode-map
+					     [remap xref-find-references] #'lsp-ui-peek-find-references)
+				 (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))))
+
+;; configuration for editing html/xhtml...
+(add-hook 'text-mode-hook
+	  (lambda ()
+	    (setq fill-column 80)
+	    (auto-fill-mode)
+	    (setq bidi-display-reordering nil)
+	    (setq line-move-visual nil)))
+;; "custom-setting for c family language"
+(setq c-default-style '((c-mode . "linux")
+			(c++-mode . "stroustrup")
+			(awk-mode . "awk")
+			(python-mode . "python")
+			(other . "gnu")))
+
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (eglot-ensure)
+	    ;; comment-style
+	    (setq comment-style 'extra-line)
+	    ;; behavior of symbol `#', e.g. #define... #include...
+	    (setq c-electric-pound-behavior '(alignleft))))
+(use-package company-c-headers
+  :commands company-c-headers)
+(use-package clang-format)
+;;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
+;;(require 'bison-mode)
+(add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
+
+;; configuration for python programming language
+(add-hook 'python-mode-hook #'eglot-ensure)
 
 (use-package yaml-mode)
-
-(use-package )
-
-;; load initialization for c programming language and html mode
-(add-to-list 'load-path (expand-file-name "elpa" user-emacs-directory))
-(require 'init-text)
-(require 'init-c)
-(require 'init-go)
-(require 'init-python)
 
 (defun json-validator ()
   (condition-case nil
