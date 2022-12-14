@@ -196,7 +196,7 @@
 
 (add-hook 'prog-mode-hook
 	  (lambda ()
-	    (when (not (derived-mode-p 'makefile-mode))
+	    (when (not (derived-mode-p 'makefile-mode 'snippet-mode))
 	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
 
 (put 'upcase-region 'disabled nil)
