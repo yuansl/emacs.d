@@ -65,9 +65,7 @@
   :bind
   ("C-x C-f" . helm-find-files)
   :bind
-  ("M-x" . helm-M-x)
-  :config
-  (helm-mode))
+  ("M-x" . helm-M-x))
 
 (use-package which-key)
 
@@ -81,7 +79,8 @@
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
 			     (global-company-mode)
-			     (which-key-mode)))
+			     (which-key-mode)
+			     (helm-mode)))
 
 (use-package magit
   :config
