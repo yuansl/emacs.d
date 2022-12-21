@@ -48,7 +48,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(lsp lsp-ui lsp-mode go-playground clang-format company-c-headers magit which-key company gotest yaml-mode sql-indent yasnippet-snippets bind-key markdown-toc helm))
+   '(use-package lsp-ui lsp-mode go-playground clang-format company-c-headers magit which-key company gotest yaml-mode sql-indent yasnippet-snippets bind-key markdown-toc helm))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -130,7 +130,7 @@
   (setq lsp-ui-doc-enable nil)
   :hook ((go-mode rust-mode) . (lambda ()
 				 (define-key lsp-ui-mode-map
-					     [remap xref-find-references] #'lsp-ui-peek-find-references)
+				   [remap xref-find-references] #'lsp-ui-peek-find-references)
 				 (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))))
 
 ;; configuration for editing html/xhtml...
