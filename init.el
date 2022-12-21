@@ -62,6 +62,7 @@
 (use-package helm
   :init
   (setq completion-styles '(flex))
+  :config
   :bind
   ("C-x C-f" . helm-find-files)
   :bind
@@ -130,7 +131,7 @@
   (setq lsp-ui-doc-enable nil)
   :hook ((go-mode rust-mode) . (lambda ()
 				 (define-key lsp-ui-mode-map
-				   [remap xref-find-references] #'lsp-ui-peek-find-references)
+					     [remap xref-find-references] #'lsp-ui-peek-find-references)
 				 (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))))
 
 ;; configuration for editing html/xhtml...
