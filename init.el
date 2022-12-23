@@ -48,7 +48,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(use-package lsp-ui lsp-mode go-playground clang-format company-c-headers magit which-key company gotest yaml-mode sql-indent yasnippet-snippets bind-key markdown-toc helm))
+   '(go-mode yasnippet markdown-mode use-package lsp-ui lsp-mode go-playground clang-format company-c-headers magit which-key company gotest yaml-mode sql-indent yasnippet-snippets bind-key markdown-toc helm))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
