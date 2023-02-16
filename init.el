@@ -75,7 +75,8 @@
   ;; we use clangd for code complete
   (delete 'company-clang company-backends)
   (setq company-minimum-prefix-length 1
-	company-idle-delay 0.0))
+	company-idle-delay 0.0)
+  :defer)
 
 (add-hook 'after-init-hook (lambda ()
 			     (global-auto-revert-mode t)
@@ -85,7 +86,8 @@
 
 (use-package magit
   :config
-  (define-key magit-mode-map (kbd "C-x g") #'magit-status))
+  (define-key magit-mode-map (kbd "C-x g") #'magit-status)
+  :defer)
 
 (use-package sql-indent
   :config
@@ -136,7 +138,8 @@
 
 (use-package lsp-treemacs
   :config
-  (lsp-treemacs-sync-mode))
+  (lsp-treemacs-sync-mode)
+  :defer)
 
 ;; configuration for editing html/xhtml...
 (add-hook 'text-mode-hook
