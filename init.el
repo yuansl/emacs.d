@@ -48,7 +48,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(lsp-treemacs 0blayout use-package lsp-ui lsp-mode go-playground clang-format company-c-headers magit which-key company gotest yaml-mode sql-indent yasnippet-snippets bind-key markdown-toc helm))
+   '(protobuf-mode lsp-treemacs 0blayout use-package lsp-ui lsp-mode go-playground clang-format company-c-headers magit which-key company gotest yaml-mode sql-indent yasnippet-snippets bind-key markdown-toc helm))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -95,7 +95,11 @@
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode))
-(use-package markdown-toc)
+(use-package markdown-toc
+  :defer)
+
+(use-package protobuf-mode
+  :defer)
 
 (use-package yasnippet
   :config
@@ -126,15 +130,15 @@
   ;; rustup default stable
   ;; rustup component add rust-src rust-analysis
   ;; ```
-  :hook ((go-mode rust-mode) . #'lsp-deferred))
+  :hook ((go-mode) . #'lsp-deferred))
 
 (use-package lsp-ui
   :config
   (setq lsp-ui-doc-enable nil)
-  :hook ((go-mode rust-mode) . (lambda ()
-				 (define-key lsp-ui-mode-map
-					     [remap xref-find-references] #'lsp-ui-peek-find-references)
-				 (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))))
+  :hook ((go-mode) . (lambda ()
+		       (define-key lsp-ui-mode-map
+				   [remap xref-find-references] #'lsp-ui-peek-find-references)
+		       (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))))
 
 (use-package lsp-treemacs
   :config
