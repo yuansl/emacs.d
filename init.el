@@ -13,7 +13,7 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
-(setq-default default-frame-alist '((font . "Monospace-10:pixelsize=14")))
+(setq-default default-frame-alist '((font . "Monospace-10:pixelsize=14")(width . 100)(height . 45)))
 
 (global-set-key (kbd "C-x f") 'project-find-file)
 
