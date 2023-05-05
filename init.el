@@ -48,7 +48,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(protobuf-mode lsp-treemacs 0blayout use-package lsp-ui lsp-mode go-playground clang-format company-c-headers magit which-key company gotest yaml-mode sql-indent yasnippet-snippets bind-key markdown-toc helm))
+   '(helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -89,61 +89,56 @@
   (define-key magit-mode-map (kbd "C-x g") #'magit-status)
   :defer)
 
-(use-package sql-indent
-  :config
-  (setq sql-indent-offset 8))
-
-(use-package markdown-mode
-  :mode ("\\.md\\'" . gfm-mode))
-(use-package markdown-toc
-  :defer)
-
-(use-package protobuf-mode
-  :defer)
-
-(use-package yasnippet
-  :config
-  (add-hook 'prog-mode-hook #'yas-minor-mode))
-(use-package yasnippet-snippets)
-
-;; configuration for golang programming language
-(use-package go-mode
-  :hook ((go-mode) . (lambda ()
-		       (subword-mode)
-		       (setq gofmt-command "goimports")
-		       (add-hook 'before-save-hook 'gofmt-before-save nil t)
-		       (if (not (string-match "go" compile-command))
-			   (set (make-local-variable 'compile-command)
-				"go vet && go test -v -failfast")))))
-(use-package go-playground)
-
 (use-package lsp-mode
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
   (setq lsp-auto-guess-root t)
-  (setq lsp-enable-file-watchers nil)
-  ;; rust mode support
-  ;; ```
-  ;; snap install rustup
-  ;; rustup install stable
-  ;; rustup default stable
-  ;; rustup component add rust-src rust-analysis
-  ;; ```
-  :hook ((go-mode) . #'lsp-deferred))
+  (setq lsp-enable-file-watchers nil))
 
 (use-package lsp-ui
   :config
-  (setq lsp-ui-doc-enable nil)
-  :hook ((go-mode) . (lambda ()
-		       (define-key lsp-ui-mode-map
-				   [remap xref-find-references] #'lsp-ui-peek-find-references)
-		       (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))))
+  (setq lsp-ui-doc-enable nil))
 
 (use-package lsp-treemacs
   :config
   (lsp-treemacs-sync-mode)
   :defer)
+
+(use-package yasnippet
+  :config
+  :hook ((prog-mode) . #'yas-minor-mode))
+
+(use-package yasnippet-snippets)
+
+;; configuration for golang programming language
+(use-package go-mode
+  :hook ((go-mode) .
+	 (lambda ()
+	   (subword-mode)
+	   (setq gofmt-command "goimports")
+	   (add-hook 'before-save-hook 'gofmt-before-save nil t)
+	   (if (not (string-match "go" compile-command))
+	       (set (make-local-variable 'compile-command)
+		    "go vet && go test -failfast -v"))
+	   (if (featurep 'lsp-mode)
+	       (lsp-deferred))
+	   (if (featurep 'lsp-ui)
+	       (progn
+		 (define-key lsp-ui-mode-map
+			     [remap xref-find-references] #'lsp-ui-peek-find-references)
+		 (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation)))
+	   )))
+
+(use-package go-playground)
+
+;; rust mode support
+;; ```
+;; snap install rustup
+;; rustup install stable
+;; rustup default stable
+;; rustup component add rust-src rust-analysis
+;; ```
 
 ;; configuration for editing html/xhtml...
 (add-hook 'text-mode-hook
@@ -176,7 +171,19 @@
 ;; configuration for python programming language
 (add-hook 'python-mode-hook #'eglot-ensure)
 
+(use-package sql-indent
+  :config
+  (setq sql-indent-offset 8))
+
+(use-package markdown-mode
+  :mode ("\\.md\\'" . gfm-mode))
+(use-package markdown-toc
+  :defer)
+
 (use-package yaml-mode)
+
+(use-package protobuf-mode
+  :defer)
 
 (defun json-validator ()
   (condition-case nil
@@ -212,9 +219,3 @@
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
