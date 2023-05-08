@@ -171,7 +171,7 @@
 
 (add-hook 'c-mode-common-hook
 	  (lambda ()
-	    (eglot-ensure)
+	    (lsp-deferred)
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
 	    ;; behavior of symbol `#', e.g. #define... #include...
