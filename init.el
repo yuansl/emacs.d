@@ -20,7 +20,6 @@
   (global-so-long-mode 1)
   ;; Basic settings.
   (setq so-long-action 'so-long-minor-mode)
-  (setq so-long-threshold 1000000)
   ;; Additional target major modes to trigger for.
   (mapc (apply-partially #'add-to-list 'so-long-target-modes)
         '(sgml-mode nxml-mode js-mode text-mode))
