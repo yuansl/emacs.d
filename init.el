@@ -15,6 +15,23 @@
 (setq-default ring-bell-function 'ignore)
 (setq-default default-frame-alist '((font . "Monospace-10:pixelsize=14")(width . 100)(height . 45)))
 
+;; Enable so-long library.
+(when (require 'so-long nil :noerror)
+  (global-so-long-mode 1)
+  ;; Basic settings.
+  (setq so-long-action 'so-long-minor-mode)
+  (setq so-long-threshold 1000000)
+  ;; Additional target major modes to trigger for.
+  (mapc (apply-partially #'add-to-list 'so-long-target-modes)
+        '(sgml-mode nxml-mode js-mode text-mode))
+  ;; Additional buffer-local minor modes to disable.
+  (mapc (apply-partially #'add-to-list 'so-long-minor-modes)
+        '(diff-hl-mode diff-hl-amend-mode diff-hl-flydiff-mode))
+  ;; Additional variables to override.
+  (mapc (apply-partially #'add-to-list 'so-long-variable-overrides)
+        '((show-trailing-whitespace . nil)
+          (truncate-lines . nil))))
+
 (global-set-key (kbd "C-x f") 'project-find-file)
 
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
@@ -34,7 +51,6 @@
  '(column-number-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
- '(global-so-long-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
  '(ido-mode 'both nil (ido))
