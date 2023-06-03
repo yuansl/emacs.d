@@ -222,7 +222,10 @@
 	   )))
 
 (use-package go-playground)
-(use-package go-tag)
+(use-package go-tag
+  :config
+  (setq go-tag-args (list "-transform" "snakecase")))
+
 (use-package go-gen-test)
 
 ;; rust mode support
