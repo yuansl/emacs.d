@@ -221,7 +221,9 @@
 		 (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation)))
 	   )))
 
-(use-package go-playground)
+(use-package go-playground
+  :config
+  (setq go-playground-init-command ""))
 (use-package go-tag
   :config
   (setq go-tag-args (list "-transform" "snakecase")))
