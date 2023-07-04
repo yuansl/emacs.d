@@ -139,7 +139,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
