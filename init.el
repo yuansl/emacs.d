@@ -144,6 +144,7 @@
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil)
+ '(vc-follow-symlinks t)
  '(warning-suppress-log-types '((comp))))
 
 (require 'use-package)
