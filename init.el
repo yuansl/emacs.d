@@ -139,7 +139,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -164,8 +164,6 @@
 
 (use-package company
   :config
-  ;; we use clangd for code complete
-  (delete 'company-clang company-backends)
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.0)
   :defer)
@@ -212,7 +210,7 @@
 	   (add-hook 'before-save-hook 'gofmt-before-save nil t)
 	   (if (not (string-match "go" compile-command))
 	       (set (make-local-variable 'compile-command)
-		    "go vet && go test -failfast -v"))
+		    "go vet && go test -v "))
 	   (if (featurep 'lsp-mode)
 	       (lsp-deferred))
 	   (if (featurep 'lsp-ui)
@@ -231,6 +229,7 @@
 
 (use-package go-gen-test)
 
+
 ;; rust mode support
 ;; ```
 ;; snap install rustup
@@ -238,6 +237,30 @@
 ;; rustup default stable
 ;; rustup component add rust-src rust-analysis
 ;; ```
+(use-package rust-mode
+  :hook ((rust-mode) .
+	 (lambda ()
+	   (setq-local rust-format-on-save t)
+	   (set (make-local-variable 'compile-command)
+		"cargo run")
+	   (if (featurep 'lsp-mode)
+	       (progn
+		 (lsp-deferred)
+		 (if (featurep 'lsp-ui)
+		     (progn
+		       (define-key lsp-ui-mode-map
+				   [remap xref-find-references] #'lsp-ui-peek-find-references)
+		       (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation)))
+		 ))
+	   )))
+
+(use-package rust-playground
+  :config
+  (define-key rust-playground-mode-map (kbd "C-<return>") #'rust-playground-exec)
+  (setq rust-playground-basedir (expand-file-name "~/src/playground"))
+  ;; (if (featurep 'lsp-mode)
+  ;;     (add-to-list 'lsp-rust-analyzer-linked-projects (expand-file-name "~/src/playground")))
+  )
 
 ;; configuration for editing html/xhtml...
 (add-hook 'text-mode-hook
