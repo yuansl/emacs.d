@@ -139,7 +139,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -210,7 +210,7 @@
 	   (add-hook 'before-save-hook 'gofmt-before-save nil t)
 	   (if (not (string-match "go" compile-command))
 	       (set (make-local-variable 'compile-command)
-		    "go vet && go test -v "))
+		    "go test -v -vet=all ."))
 	   (if (featurep 'lsp-mode)
 	       (lsp-deferred))
 	   (if (featurep 'lsp-ui)
@@ -228,7 +228,6 @@
   (setq go-tag-args (list "-transform" "snakecase")))
 
 (use-package go-gen-test)
-
 
 ;; rust mode support
 ;; ```
