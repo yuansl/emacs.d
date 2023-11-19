@@ -239,6 +239,7 @@
 (use-package rust-mode
   :hook ((rust-mode) .
 	 (lambda ()
+	   (setq-local rust-indent-offset 8)
 	   (setq-local rust-format-on-save t)
 	   (set (make-local-variable 'compile-command)
 		"cargo run")
