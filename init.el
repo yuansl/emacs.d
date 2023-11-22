@@ -210,7 +210,7 @@
 	   (add-hook 'before-save-hook 'gofmt-before-save nil t)
 	   (if (not (string-match "go" compile-command))
 	       (set (make-local-variable 'compile-command)
-		    "go test -v -vet=all ."))
+		    "go test -vet=all -v"))
 	   (if (featurep 'lsp-mode)
 	       (lsp-deferred))
 	   (if (featurep 'lsp-ui)
