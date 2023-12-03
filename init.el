@@ -155,6 +155,7 @@
   :init
   (setq completion-styles '(flex))
   :config
+  (setq helm-move-to-line-cycle-in-source nil)
   :bind
   ("C-x C-f" . helm-find-files)
   :bind
