@@ -185,7 +185,9 @@
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
   (setq lsp-auto-guess-root t)
-  (setq lsp-enable-file-watchers nil))
+  (setq lsp-enable-file-watchers nil)
+  ;; let clangd generate index in background
+  (setq lsp-clients-clangd-args '("-background-index" "--header-insertion-decorators=0")))
 
 (use-package lsp-ui
   :config
