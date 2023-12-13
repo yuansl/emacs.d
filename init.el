@@ -139,7 +139,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(grip-mode protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui lsp-treemacs yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -187,7 +187,8 @@
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
   ;; let clangd generate index in background
-  (setq lsp-clients-clangd-args '("-background-index" "--header-insertion-decorators=0")))
+  ;; (setq lsp-clients-clangd-args '("-background-index" "--header-insertion-decorators=0"))
+  )
 
 (use-package lsp-ui
   :config
@@ -300,8 +301,17 @@
   :config
   (setq sql-indent-offset 8))
 
+(use-package grip-mode
+  :config
+  (setq grip-github-user "yuansl")
+  (require 'auth-source-pass)
+  (setq grip-github-password (auth-source-pass--read-entry "github.com/yuansl")))
+
 (use-package markdown-mode
-  :mode ("\\.md\\'" . gfm-mode))
+  :mode ("\\.md\\'" . gfm-mode)
+  :hook ((markdown-mode) . (lambda()
+			     (if (featurep 'grip-mode)
+				 (grip-mode)))))
 (use-package markdown-toc
   :defer)
 
