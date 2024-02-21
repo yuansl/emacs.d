@@ -173,7 +173,8 @@
 			     (global-auto-revert-mode t)
 			     (global-company-mode)
 			     (which-key-mode)
-			     (helm-mode)))
+			     (helm-mode)
+			     (recentf-mode)))
 
 (use-package magit
   :config
