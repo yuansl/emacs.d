@@ -195,11 +195,6 @@
   :config
   (setq lsp-ui-doc-enable nil))
 
-(use-package lsp-treemacs
-  :config
-  (lsp-treemacs-sync-mode)
-  :defer)
-
 (use-package yasnippet
   :config
   :hook ((prog-mode) . #'yas-minor-mode))
