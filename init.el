@@ -187,7 +187,7 @@
   :config
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
-  (setq lsp-clients-clangd-args '("--header-insertion-decorators=0" "--resource-dir=/usr/lib/gcc/x86_64-linux-gnu/14"))
+  (setq lsp-clients-clangd-args '("--header-insertion-decorators=0" "--resource-dir=/usr/lib/gcc/x86_64-linux-gnu/14" "--resource-dir=/usr/local/lib/gcc/x86_64-linux-gnu/14"))
   ;; let clangd generate index in background
   ;; (setq lsp-clients-clangd-args '("-background-index" "--header-insertion-decorators=0"))
   )
