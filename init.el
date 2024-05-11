@@ -190,7 +190,7 @@
   (setq lsp-clients-clangd-args (list "--header-insertion-decorators=0"
 				      (concat "--resource-dir=" (if (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/14")
 								    "/usr/lib/gcc/x86_64-linux-gnu/14"
-								  "/usr/local/lib/gcc/x86_64-pc-linux-gnu/14"))))
+								  "/usr/local/lib/gcc/x86_64-linux-gnu/14"))))
   ;; let clangd generate index in background
   ;; (setq lsp-clients-clangd-args '("-background-index" "--header-insertion-decorators=0"))
   )
