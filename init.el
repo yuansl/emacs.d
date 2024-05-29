@@ -190,10 +190,9 @@
   (setq lsp-clients-clangd-args (list "--header-insertion-decorators=0"
 				      (concat "--resource-dir=" (if (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/14")
 								    "/usr/lib/gcc/x86_64-linux-gnu/14"
-								  "/usr/local/lib/gcc/x86_64-linux-gnu/14"))))
-  ;; let clangd generate index in background
-  ;; (setq lsp-clients-clangd-args '("-background-index" "--header-insertion-decorators=0"))
-  )
+								  "/usr/local/lib/gcc/x86_64-linux-gnu/14"))
+				      ;; let clangd generate index in background
+				      "-background-index")))
 
 (use-package lsp-ui
   :config
@@ -210,7 +209,7 @@
   :hook ((go-mode) .
 	 (lambda ()
 	   (subword-mode)
-	   (setq gofmt-command "goimports")
+	   (setq gofmt-command "gofmt")
 	   (add-hook 'before-save-hook 'gofmt-before-save nil t)
 	   (if (not (string-match "go" compile-command))
 	       (set (make-local-variable 'compile-command)
