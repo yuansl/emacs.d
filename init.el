@@ -139,7 +139,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-snippets go-mode go-playground company-c-headers clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -187,7 +187,7 @@
   :config
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
-  (setq lsp-clients-clangd-args (list "--header-insertion-decorators=0"
+  (setq lsp-clients-clangd-args (list "--header-insertion=never"
 				      (concat "--resource-dir=" (if (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/14")
 								    "/usr/lib/gcc/x86_64-linux-gnu/14"
 								  "/usr/local/lib/gcc/x86_64-linux-gnu/14"))
@@ -286,8 +286,7 @@
 	    (setq comment-style 'extra-line)
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))))
-(use-package company-c-headers
-  :commands company-c-headers)
+
 (use-package clang-format)
 ;;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
 ;;(require 'bison-mode)
