@@ -139,7 +139,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-classic-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -161,9 +161,11 @@
   :bind
   ("M-x" . helm-M-x))
 
-(use-package which-key)
+(use-package which-key
+  :pin gnu)
 
 (use-package company
+  :pin gnu
   :config
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.0)
@@ -199,10 +201,12 @@
   (setq lsp-ui-doc-enable nil))
 
 (use-package yasnippet
+  :pin gnu
   :config
   :hook ((prog-mode) . #'yas-minor-mode))
 
-(use-package yasnippet-snippets)
+(use-package yasnippet-classic-snippets
+  :pin gnu)
 
 ;; configuration for golang programming language
 (use-package go-mode
@@ -296,6 +300,7 @@
 (add-hook 'python-mode-hook #'eglot-ensure)
 
 (use-package sql-indent
+  :pin gnu
   :config
   (setq sql-indent-offset 8))
 
