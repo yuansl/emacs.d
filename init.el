@@ -48,6 +48,8 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(column-number-mode t)
+ '(compiler-explorer-output-filters
+   '(:binary nil :binaryObject nil :commentOnly t :demangle t :directives t :intel nil :labels t :libraryCode t :trim nil :debugCalls nil))
  '(connection-local-criteria-alist
    '(((:application tramp)
       tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
@@ -139,7 +141,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-classic-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(compiler-explorer protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-classic-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
