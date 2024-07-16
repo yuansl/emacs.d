@@ -296,6 +296,9 @@
   (setq compiler-explorer-output-filters
 	'(:binary nil :binaryObject nil :commentOnly t :demangle t :directives t :intel nil :labels t :libraryCode t :trim nil :debugCalls nil))
   (setq compiler-explorer-make-temp-file nil)
+  :hook ((compiler-explorer--local-mode) .
+	 (lambda ()
+	   (compiler-explorer-set-compiler-args "-std=gnu23 -Wall -Wextra -fno-strict-aliasing -O2")))
   )
 
 (use-package clang-format)
