@@ -48,8 +48,6 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(column-number-mode t)
- '(compiler-explorer-output-filters
-   '(:binary nil :binaryObject nil :commentOnly t :demangle t :directives t :intel nil :labels t :libraryCode t :trim nil :debugCalls nil))
  '(connection-local-criteria-alist
    '(((:application tramp)
       tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
@@ -292,6 +290,13 @@
 	    (setq comment-style 'extra-line)
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))))
+
+(use-package compiler-explorer
+  :config
+  (setq compiler-explorer-output-filters
+	'(:binary nil :binaryObject nil :commentOnly t :demangle t :directives t :intel nil :labels t :libraryCode t :trim nil :debugCalls nil))
+  (setq compiler-explorer-make-temp-file nil)
+  )
 
 (use-package clang-format)
 ;;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
