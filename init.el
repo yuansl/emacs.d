@@ -139,7 +139,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(compiler-explorer protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-classic-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-classic-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -291,15 +291,6 @@
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))))
 
-(use-package compiler-explorer
-  :config
-  (setq compiler-explorer-output-filters
-	'(:binary nil :binaryObject nil :commentOnly t :demangle t :directives t :intel nil :labels t :libraryCode t :trim nil :debugCalls nil))
-  (setq compiler-explorer-make-temp-file nil)
-  :hook ((compiler-explorer--local-mode) .
-	 (lambda ()
-	   (compiler-explorer-set-compiler-args "-std=gnu23 -Wall -Wextra -fno-strict-aliasing -O2")))
-  )
 
 (use-package clang-format)
 ;;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
