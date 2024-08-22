@@ -124,6 +124,8 @@
      (tramp-connection-local-default-system-profile
       (path-separator . ":")
       (null-device . "/dev/null"))))
+ '(display-time-default-load-average nil)
+ '(display-time-format "%Y-%m-%dT%H:%M %Z")
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(ido-enable-flex-matching t)
