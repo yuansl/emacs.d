@@ -125,7 +125,7 @@
       (path-separator . ":")
       (null-device . "/dev/null"))))
  '(display-time-default-load-average nil)
- '(display-time-format "%m-%dT%H:%M %Z")
+ '(display-time-format "%H:%M %Z")
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(ido-enable-flex-matching t)
