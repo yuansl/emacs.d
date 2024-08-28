@@ -52,7 +52,7 @@
    '(((:application tramp)
       tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
  '(display-time-default-load-average nil)
- '(display-time-format "%m-%dT%H:%M %Z")
+ '(display-time-format "%H:%M %Z")
  '(display-time-mode t)
  '(electric-pair-mode t)
  '(ido-enable-flex-matching t)
