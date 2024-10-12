@@ -55,6 +55,7 @@
  '(display-time-format "%H:%M %Z")
  '(display-time-mode t)
  '(electric-pair-mode t)
+ '(go-playground-basedir "~/.go/src/playground")
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
  '(ido-mode 'both nil (ido))
