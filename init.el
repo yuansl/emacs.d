@@ -55,7 +55,6 @@
  '(display-time-format "%H:%M %Z")
  '(display-time-mode t)
  '(electric-pair-mode t)
- '(go-playground-basedir "~/.go/src/playground")
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
  '(ido-mode 'both nil (ido))
@@ -149,7 +148,8 @@
 	       (set (make-local-variable 'compile-command)
 		    "go test -vet=all -v"))
 	   (if (featurep 'lsp-mode)
-	       (lsp-deferred))
+	       (setq lsp-go-build-flags "-tags=duckdb")
+	     (lsp-deferred))
 	   (if (featurep 'lsp-ui)
 	       (progn
 		 (define-key lsp-ui-mode-map
@@ -159,7 +159,8 @@
 
 (use-package go-playground
   :config
-  (setq go-playground-init-command ""))
+  (setq go-playground-init-command "")
+  (setq go-playground-basedir "~/.go/src/playground"))
 (use-package go-tag
   :config
   (setq go-tag-args (list "-transform" "snakecase")))
