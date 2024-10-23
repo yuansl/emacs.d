@@ -148,8 +148,11 @@
 	       (set (make-local-variable 'compile-command)
 		    "go test -vet=all -v"))
 	   (if (featurep 'lsp-mode)
-	       (setq lsp-go-build-flags "-tags=duckdb")
-	     (lsp-deferred))
+	       (progn
+		 (setq lsp-go-build-flags ["-tags=duckdb"])
+		 (lsp-deferred)
+		 )
+	     )
 	   (if (featurep 'lsp-ui)
 	       (progn
 		 (define-key lsp-ui-mode-map
