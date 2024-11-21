@@ -119,9 +119,7 @@
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
-				      (concat "--resource-dir=" (if (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/14")
-								    "/usr/lib/gcc/x86_64-linux-gnu/14"
-								  "/usr/local/lib/gcc/x86_64-linux-gnu/14"))
+				      (concat "--resource-dir=" "/usr/lib/gcc/x86_64-linux-gnu/14")
 				      ;; let clangd generate index in background
 				      "-background-index")))
 
