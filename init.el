@@ -116,6 +116,7 @@
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
+  (define-key lsp-mode-map (kbd "C-c C-c") lsp-command-map)
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
