@@ -68,7 +68,7 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-gen-test go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-classic-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(protobuf-ts-mode rust-playground rust-mode all-the-icons go-tag helm which-key company magit lsp-mode lsp-ui yasnippet yasnippet-classic-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -166,8 +166,6 @@
 (use-package go-tag
   :config
   (setq go-tag-args (list "-transform" "snakecase")))
-
-(use-package go-gen-test)
 
 ;; rust mode support
 ;; ```
