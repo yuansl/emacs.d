@@ -87,6 +87,7 @@
   (setq helm-move-to-line-cycle-in-source nil)
   :bind
   ("C-x C-f" . helm-find-files)
+  ("C-x b" . 'helm-buffers-list)
   :bind
   ("M-x" . helm-M-x))
 
