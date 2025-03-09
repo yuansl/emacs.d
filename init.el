@@ -46,11 +46,15 @@
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f"
+    "#f6f3e8"])
  '(column-number-mode t)
  '(connection-local-criteria-alist
-   '(((:application tramp)
-      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
+   '(((:application tramp :protocol "kubernetes")
+      tramp-kubernetes-connection-local-default-profile)
+     ((:application tramp)
+      tramp-connection-local-default-system-profile
+      tramp-connection-local-default-shell-profile)))
  '(display-time-default-load-average nil)
  '(display-time-format "%H:%M %Z")
  '(display-time-mode t)
@@ -68,15 +72,16 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(all-the-icons go-tag helm company magit lsp-mode lsp-ui yasnippet yasnippet-classic-snippets go-mode go-playground clang-format sql-indent markdown-mode markdown-toc yaml-mode protobuf-mode))
+   '(all-the-icons clang-format company go-mode go-playground helm
+		   lsp-mode lsp-ui magit markdown-mode markdown-toc
+		   protobuf-mode sql-indent yaml-mode yasnippet
+		   yasnippet-classic-snippets))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
  '(tooltip-mode nil)
  '(vc-follow-symlinks t)
  '(warning-suppress-log-types '((comp))))
-
-(setq use-package-always-ensure t)
 
 (use-package helm
   :init
@@ -111,7 +116,7 @@
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
-  (define-key lsp-mode-map (kbd "C-c C-c") lsp-command-map)
+  (define-key lsp-mode-map (kbd "C-c") lsp-command-map)
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
@@ -155,14 +160,19 @@
 (use-package go-playground
   :config
   (setq go-playground-init-command "")
-  (setq go-playground-basedir "~/.go/src/playground"))
-(use-package go-tag
-  :config
-  (setq go-tag-args (list "-transform" "snakecase")))
+  (setq go-playground-basedir "~/.go/src/playground")
+  :hook ((go-playground-mode) .
+	 (lambda ()
+	   (if (featurep 'lsp-mode)
+	       (define-key go-playground-mode-map (kbd "C-c C-c") lsp-command-map))
+	   (define-key go-playground-mode-map (kbd "C-<return>") #'go-playground-exec)
+	   )
+	 )
+  )
 
 ;; rust mode support
 ;; ```
-;; snap install rustup
+;; apt install rustup
 ;; rustup install stable
 ;; rustup default stable
 ;; rustup component add rust-src rust-analysis
