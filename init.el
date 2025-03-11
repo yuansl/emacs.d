@@ -14,8 +14,8 @@
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
 (setq-default default-frame-alist '((font . "Monospace-10:pixelsize=14")(width . 100)(height . 45)))
-(setq-default initial-major-mode 'text-mode)
-(setq-default initial-scratch-message nil)
+(setq-default initial-major-mode 'markdown-mode)
+(setq-default initial-scratch-message "# This buffer is for text that is not saved,\n# To create a file, visit it with `\\[find-file]' and enter text in its buffer.")
 ;; Enable so-long library.
 (when (require 'so-long nil :noerror)
   (global-so-long-mode 1)
