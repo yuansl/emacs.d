@@ -244,7 +244,10 @@
   (setq sql-indent-offset 8))
 
 (use-package markdown-mode
-  :mode ("\\.md\\'" . gfm-mode))
+  :mode ("\\.md\\'" . gfm-mode)
+  :hook ((markdown-mode) . (lambda()
+			     (auto-fill-mode 0))
+	 ))
 (use-package markdown-toc
   :defer)
 
