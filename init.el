@@ -77,9 +77,10 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(all-the-icons clang-format company go-mode go-playground helm
-		   lsp-mode lsp-ui magit markdown-mode markdown-toc
-		   protobuf-mode sql-indent yaml-mode yasnippet
+   '(all-the-icons bison-mode clang-format company go-mode go-playground
+		   helm lsp-mode lsp-ui magit markdown-mode
+		   markdown-toc protobuf-mode rust-mode
+		   rust-playground sql-indent yaml-mode yasnippet
 		   yasnippet-classic-snippets))
  '(save-place-mode t)
  '(size-indication-mode t)
@@ -151,7 +152,7 @@
 		    "go test -vet=all -v"))
 	   (if (featurep 'lsp-mode)
 	       (progn
-		 (setq lsp-go-build-flags ["-tags=duckdb"])
+		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
 		 (lsp-deferred)
 		 )
 	     )
@@ -178,35 +179,37 @@
 ;; rust mode support
 ;; ```
 ;; apt install rustup
-;; rustup install stable
-;; rustup default stable
-;; rustup component add rust-src rust-analysis
+;; RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static rustup install stable
+;; RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static rustup default stable
+;; RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static rustup component add rust-src rust-analysis rust-analyzer
+;; RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static rustup update
 ;; ```
-;; (use-package rust-mode
-;;   :hook ((rust-mode) .
-;; 	 (lambda ()
-;; 	   (setq-local rust-indent-offset 8)
-;; 	   (setq-local rust-format-on-save t)
-;; 	   (set (make-local-variable 'compile-command)
-;; 		"cargo run")
-;; 	   (if (featurep 'lsp-mode)
-;; 	       (progn
-;; 		 (lsp-deferred)
-;; 		 (if (featurep 'lsp-ui)
-;; 		     (progn
-;; 		       (define-key lsp-ui-mode-map
-;; 				   [remap xref-find-references] #'lsp-ui-peek-find-references)
-;; 		       (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation)))
-;; 		 ))
-;; 	   )))
+(use-package rust-mode
+  :hook ((rust-mode) .
+	 (lambda ()
+	   (setq-local rust-mode-treesitter-derive t)
+	   (setq-local rust-format-on-save t)
+	   (setq-local rust-indent-offset 8)
+	   (if (featurep 'lsp-mode)
+	       (progn
+		 (lsp-deferred)
+		 (if (featurep 'lsp-ui)
+		     (progn
+		       (define-key lsp-ui-mode-map
+				   [remap xref-find-references] #'lsp-ui-peek-find-references)
+		       (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation)))
+		 ))
+	   )))
 
-;; (use-package rust-playground
-;;   :config
-;;   (define-key rust-playground-mode-map (kbd "C-<return>") #'rust-playground-exec)
-;;   (setq rust-playground-basedir (expand-file-name "~/src/playground"))
-;;   ;; (if (featurep 'lsp-mode)
-;;   ;;     (add-to-list 'lsp-rust-analyzer-linked-projects (expand-file-name "~/src/playground")))
-;;   )
+(use-package rust-playground
+  :config
+  (define-key rust-playground-mode-map (kbd "C-<return>") #'rust-playground-exec)
+  (setq rust-playground-basedir (expand-file-name "~/src/playground"))
+  (setq rust-playground-cargo-toml-template
+	"[package]\12name = \"foo\"\12version = \"0.1.0\"\12authors = [\"Rust Example <rust-snippet@example.com>\"]\12edition = \"2024\"\12\12[dependencies]")
+  (if (featurep 'lsp-mode)
+      (add-to-list 'lsp-rust-analyzer-linked-projects (expand-file-name "~/src/playground")))
+  )
 
 ;; configuration for editing html/xhtml...
 (add-hook 'text-mode-hook
