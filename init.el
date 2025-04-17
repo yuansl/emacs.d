@@ -148,8 +148,7 @@
 	   (setq gofmt-command "gofmt")
 	   (add-hook 'before-save-hook 'gofmt-before-save nil t)
 	   (if (not (string-match "go" compile-command))
-	       (set (make-local-variable 'compile-command)
-		    "go test -vet=all -v"))
+	       (setq-local compile-command "go test -vet=all -v"))
 	   (if (featurep 'lsp-mode)
 	       (progn
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
@@ -190,6 +189,7 @@
 	   (setq-local rust-mode-treesitter-derive t)
 	   (setq-local rust-format-on-save t)
 	   (setq-local rust-indent-offset 8)
+	   (setq-local compile-command "cargo run")
 	   (if (featurep 'lsp-mode)
 	       (progn
 		 (lsp-deferred)
