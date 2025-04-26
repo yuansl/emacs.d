@@ -126,7 +126,9 @@
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
-				      (concat "--resource-dir=" "/usr/lib/gcc/x86_64-linux-gnu/14")
+				      (concat "--resource-dir=" (unless (not (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/15"))
+								  "/usr/lib/gcc/x86_64-linux-gnu/14"
+								  "/usr/lib/gcc/x86_64-linux-gnu/15"))
 				      ;; let clangd generate index in background
 				      "-background-index")))
 
@@ -207,8 +209,6 @@
   (setq rust-playground-basedir (expand-file-name "~/src/playground"))
   (setq rust-playground-cargo-toml-template
 	"[package]\12name = \"foo\"\12version = \"0.1.0\"\12authors = [\"Rust Example <rust-snippet@example.com>\"]\12edition = \"2024\"\12\12[dependencies]")
-  (if (featurep 'lsp-mode)
-      (add-to-list 'lsp-rust-analyzer-linked-projects (expand-file-name "~/src/playground")))
   )
 
 ;; configuration for editing html/xhtml...
