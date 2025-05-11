@@ -78,10 +78,10 @@
  '(package-native-compile t)
  '(package-selected-packages
    '(all-the-icons bison-mode clang-format company go-mode go-playground
-		   helm lsp-mode lsp-ui magit markdown-mode
-		   markdown-toc protobuf-mode rust-mode
-		   rust-playground sql-indent yaml-mode yasnippet
-		   yasnippet-classic-snippets))
+		   helm lsp-mode lsp-treemacs lsp-ui magit
+		   markdown-mode markdown-toc protobuf-mode rust-mode
+		   rust-playground sql-indent treemacs yaml-mode
+		   yasnippet yasnippet-classic-snippets))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -118,6 +118,10 @@
   (define-key magit-mode-map (kbd "C-x g") #'magit-status)
   :defer)
 
+(use-package lsp-treemacs
+  :config
+  (setq lsp-treemacs-sync-mode t))
+
 (use-package lsp-mode
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
@@ -134,7 +138,10 @@
 
 (use-package lsp-ui
   :config
-  (setq lsp-ui-doc-enable nil))
+  (setq lsp-ui-doc-delay 0.1)
+  (define-key lsp-ui-mode-map
+	      [remap xref-find-references] #'lsp-ui-peek-find-references)
+  (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))
 
 (use-package yasnippet
   :config
@@ -156,13 +163,7 @@
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
 		 (lsp-deferred)
 		 )
-	     )
-	   (if (featurep 'lsp-ui)
-	       (progn
-		 (define-key lsp-ui-mode-map
-			     [remap xref-find-references] #'lsp-ui-peek-find-references)
-		 (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation)))
-	   )))
+	     ))))
 
 (use-package go-playground
   :config
