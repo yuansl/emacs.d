@@ -120,7 +120,9 @@
 
 (use-package lsp-treemacs
   :config
-  (setq lsp-treemacs-sync-mode t))
+  (setq lsp-treemacs-sync-mode t)
+  (setq treemacs-file-event-delay 500)
+  (setq treemacs-file-follow-delay 0.05))
 
 (use-package lsp-mode
   :init
@@ -138,7 +140,8 @@
 
 (use-package lsp-ui
   :config
-  (setq lsp-ui-doc-delay 0.1)
+  ;; (setq lsp-ui-doc-delay 0.1)
+  (setq lsp-ui-doc-enable nil)
   (define-key lsp-ui-mode-map
 	      [remap xref-find-references] #'lsp-ui-peek-find-references)
   (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation))
