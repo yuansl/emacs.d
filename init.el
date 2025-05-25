@@ -37,6 +37,7 @@
           (truncate-lines . nil))))
 
 (global-set-key (kbd "C-x f") 'project-find-file)
+(global-set-key (kbd "M-!") 'async-shell-command)
 
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
@@ -111,7 +112,8 @@
 			     (global-company-mode)
 			     (which-key-mode)
 			     (helm-mode)
-			     (recentf-mode)))
+			     (recentf-mode)
+			     (savehist-mode)))
 
 (use-package magit
   :config
@@ -158,6 +160,7 @@
 	 (lambda ()
 	   (subword-mode)
 	   (setq gofmt-command "gofmt")
+	   (setq gofmt-args (list "-l"))
 	   (add-hook 'before-save-hook 'gofmt-before-save nil t)
 	   (if (not (string-match "go" compile-command))
 	       (setq-local compile-command "go test -vet=all -v"))
