@@ -108,7 +108,7 @@
   :defer)
 
 (add-hook 'after-init-hook (lambda ()
-			     (global-auto-revert-mode t)
+			     ;; (global-auto-revert-mode t)
 			     (global-company-mode)
 			     (which-key-mode)
 			     (helm-mode)
