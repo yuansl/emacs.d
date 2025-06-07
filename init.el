@@ -90,6 +90,8 @@
  '(vc-follow-symlinks t)
  '(warning-suppress-log-types '((comp))))
 
+(setq use-package-always-defer t)
+
 (use-package helm
   :init
   (setq completion-styles '(flex))
@@ -213,15 +215,25 @@
 (use-package rust-playground
   :config
   (define-key rust-playground-mode-map (kbd "C-<return>") #'rust-playground-exec)
-  (setq rust-playground-run-command "cargo run --release")
   (setq rust-playground-basedir (expand-file-name "~/src/playground"))
+  (setq rust-playground-run-command "cargo run --release")
   (setq rust-playground-cargo-toml-template
 	"[package]\12name = \"foo\"\12version = \"0.1.0\"\12authors = [\"Rust Example <rust-snippet@example.com>\"]\12edition = \"2024\"\12\12[dependencies]")
-  :hook ((rust-mode) .
-	 (lambda()
-	   (beginning-of-buffer)
-	   (insert "// -*- mode: rust; mode: rust-playground -*-\n")
-	   ))
+  :hook ((rust-playground-mode) .
+	 (lambda ()
+	   (if (> (buffer-size) 0)
+	       (let* ((last-off (- (point) (point-min)))
+		      (mode-title "// -*- mode: rust; mode: rust-playground -*-\n")
+		      (len (string-width mode-title))
+		      (first-line (buffer-substring-no-properties (point-min) (+ (point-min) len))))
+		 (unless (or (string-blank-p first-line)
+			     (string-search "mode" first-line))
+		   (progn
+		     (beginning-of-buffer)
+		     (insert mode-title)
+		     (goto-char (+ (point-min) (+ last-off len 1)))
+		     )))
+	     )))
   )
 
 ;; configuration for editing html/xhtml...
@@ -265,13 +277,11 @@
   :hook ((markdown-mode) . (lambda()
 			     (auto-fill-mode 0))
 	 ))
-(use-package markdown-toc
-  :defer)
+(use-package markdown-toc)
 
 (use-package yaml-mode)
 
-(use-package protobuf-mode
-  :defer)
+(use-package protobuf-mode)
 
 (defun json-validator ()
   (condition-case nil
