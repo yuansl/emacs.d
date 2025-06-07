@@ -123,12 +123,14 @@
   :defer)
 
 (use-package lsp-treemacs
+  :after (lsp-mode)
   :config
   (setq lsp-treemacs-sync-mode t)
   (setq treemacs-file-event-delay 500)
   (setq treemacs-file-follow-delay 0.05))
 
 (use-package lsp-mode
+  :demand t
   :init
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
@@ -143,6 +145,7 @@
 				      "-background-index")))
 
 (use-package lsp-ui
+  :after (lsp-mode)
   :config
   ;; (setq lsp-ui-doc-delay 0.1)
   (setq lsp-ui-doc-enable nil)
@@ -179,8 +182,6 @@
   (setq go-playground-basedir "~/.go/src/playground")
   :hook ((go-playground-mode) .
 	 (lambda ()
-	   (if (featurep 'lsp-mode)
-	       (define-key go-playground-mode-map (kbd "C-c C-c") lsp-command-map))
 	   (define-key go-playground-mode-map (kbd "C-<return>") #'go-playground-exec)
 	   )
 	 )
@@ -195,21 +196,20 @@
 ;; RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static rustup update
 ;; ```
 (use-package rust-mode
+  :config
+  (setq-local compile-command "cargo run --release")
   :hook ((rust-mode) .
 	 (lambda ()
 	   (setq-local rust-mode-treesitter-derive t)
 	   (setq-local rust-format-on-save t)
 	   (setq-local rust-indent-offset 8)
-	   (setq-local compile-command "cargo run")
 	   (if (featurep 'lsp-mode)
+	       (lsp-deferred))
+	   (if (featurep 'lsp-ui)
 	       (progn
-		 (lsp-deferred)
-		 (if (featurep 'lsp-ui)
-		     (progn
-		       (define-key lsp-ui-mode-map
-				   [remap xref-find-references] #'lsp-ui-peek-find-references)
-		       (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation)))
-		 ))
+		 (define-key lsp-ui-mode-map
+			     [remap xref-find-references] #'lsp-ui-peek-find-references)
+		 (define-key lsp-ui-mode-map (kbd "M-/") #'lsp-ui-peek-find-implementation)))
 	   )))
 
 (use-package rust-playground
@@ -221,6 +221,8 @@
 	"[package]\12name = \"foo\"\12version = \"0.1.0\"\12authors = [\"Rust Example <rust-snippet@example.com>\"]\12edition = \"2024\"\12\12[dependencies]")
   :hook ((rust-playground-mode) .
 	 (lambda ()
+	   (if (featurep 'lsp-mode)
+	       (define-key rust-playground-mode-map (kbd "C-c C-c") lsp-command-map))
 	   (if (> (buffer-size) 0)
 	       (let* ((last-off (- (point) (point-min)))
 		      (mode-title "// -*- mode: rust; mode: rust-playground -*-\n")
@@ -235,6 +237,10 @@
 		     )))
 	     )))
   )
+
+(advice-add 'rust-playground-rm :after
+            (lambda (&rest _)
+	      (lsp-shutdown-workspace)))
 
 ;; configuration for editing html/xhtml...
 (add-hook 'text-mode-hook
