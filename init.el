@@ -213,9 +213,15 @@
 (use-package rust-playground
   :config
   (define-key rust-playground-mode-map (kbd "C-<return>") #'rust-playground-exec)
+  (setq rust-playground-run-command "cargo run --release")
   (setq rust-playground-basedir (expand-file-name "~/src/playground"))
   (setq rust-playground-cargo-toml-template
 	"[package]\12name = \"foo\"\12version = \"0.1.0\"\12authors = [\"Rust Example <rust-snippet@example.com>\"]\12edition = \"2024\"\12\12[dependencies]")
+  :hook ((rust-mode) .
+	 (lambda()
+	   (beginning-of-buffer)
+	   (insert "// -*- mode: rust; mode: rust-playground -*-\n")
+	   ))
   )
 
 ;; configuration for editing html/xhtml...
