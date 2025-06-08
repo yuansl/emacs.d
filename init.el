@@ -197,9 +197,9 @@
 ;; ```
 (use-package rust-mode
   :config
-  (setq-local compile-command "cargo run --release")
   :hook ((rust-mode) .
 	 (lambda ()
+	   (setq-local compile-command "cargo run --release")
 	   (setq-local rust-mode-treesitter-derive t)
 	   (setq-local rust-format-on-save t)
 	   (setq-local rust-indent-offset 8)
