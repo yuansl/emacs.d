@@ -90,6 +90,7 @@
  '(vc-follow-symlinks t)
  '(warning-suppress-log-types '((comp))))
 
+(setq use-package-always-ensure t)
 (setq use-package-always-defer t)
 
 (use-package helm
@@ -135,12 +136,14 @@
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
   (define-key lsp-mode-map (kbd "C-c") lsp-command-map)
+  (setq lsp-response-timeout 20)
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
-				      (concat "--resource-dir=" (unless (not (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/15"))
-								  "/usr/lib/gcc/x86_64-linux-gnu/14"
-								  "/usr/lib/gcc/x86_64-linux-gnu/15"))
+				      (concat "--resource-dir="
+					      (if (not (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/15"))
+						  "/usr/lib/gcc/x86_64-linux-gnu/14"
+						"/usr/lib/gcc/x86_64-linux-gnu/15"))
 				      ;; let clangd generate index in background
 				      "-background-index")))
 
