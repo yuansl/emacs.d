@@ -141,9 +141,11 @@
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
 				      (concat "--resource-dir="
-					      (if (not (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/15"))
-						  "/usr/lib/gcc/x86_64-linux-gnu/14"
-						"/usr/lib/gcc/x86_64-linux-gnu/15"))
+					      (if (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/15")
+						  "/usr/lib/gcc/x86_64-linux-gnu/15"
+						(if (file-exists-p "/usr/local/lib/gcc/x86_64-linux-gnu/15")
+						    "/usr/local/lib/gcc/x86_64-linux-gnu/15"
+						  "/usr/lib/gcc/x86_64-linux-gnu/14")))
 				      ;; let clangd generate index in background
 				      "-background-index")))
 
