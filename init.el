@@ -331,10 +331,10 @@
 	(setq-local indent-region-function 'clang-format)))
   (indent-region (point-min) (point-max)))
 
-;; (add-hook 'prog-mode-hook
-;; 	  (lambda ()
-;; 	    (when (not (derived-mode-p 'makefile-mode 'snippet-mode))
-;; 	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
+(add-hook 'prog-mode-hook
+	  (lambda ()
+	    (when (not (derived-mode-p 'makefile-mode 'snippet-mode))
+	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
