@@ -13,7 +13,8 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
-(setq-default default-frame-alist '((font . "Monospace-10:pixelsize=14")(width . 100)(height . 45)))
+(setq-default default-frame-alist '((font . "Monospace-10")(width . 100)(height . 45)))
+(set-face-attribute 'default t :font  "Monospace-10")
 (setq-default initial-major-mode 'markdown-mode)
 (setq-default initial-scratch-message "\
 # This buffer is for text that is not saved, and for markdown-mode.
@@ -72,6 +73,7 @@
  '(ido-use-url-at-point t)
  '(inhibit-startup-screen t)
  '(large-file-warning-threshold 2000000)
+ '(lsp-go-hints '(("ignoredError" . t)))
  '(menu-bar-mode nil)
  '(mode-line-compact 'long)
  '(mouse-avoidance-mode 'animate nil (avoid))
@@ -111,7 +113,7 @@
   :defer)
 
 (add-hook 'after-init-hook (lambda ()
-			     ;; (global-auto-revert-mode t)
+			     (global-auto-revert-mode t)
 			     (global-company-mode)
 			     (which-key-mode)
 			     (helm-mode)
@@ -147,7 +149,8 @@
 						    "/usr/local/lib/gcc/x86_64-linux-gnu/15"
 						  "/usr/lib/gcc/x86_64-linux-gnu/14")))
 				      ;; let clangd generate index in background
-				      "-background-index")))
+				      "-background-index"))
+  :hook ((lsp-mode . (lambda () (lsp-inlay-hints-mode t)))))
 
 (use-package lsp-ui
   :after (lsp-mode)
@@ -166,19 +169,24 @@
 
 ;; configuration for golang programming language
 (use-package go-mode
+  :config
+  (setq gopls-hints (make-hash-table :test 'equal)); for gopls.hints, see https://go.dev/gopls/inlayHints
+  (puthash "ignoredError" t gopls-hints)
+  (puthash "parameterNames" t gopls-hints)
+  (puthash "compositeLiteralFields" t gopls-hints)
+  (puthash "functionTypeParameters" t gopls-hints)
   :hook ((go-mode) .
 	 (lambda ()
 	   (subword-mode)
-	   (setq gofmt-command "gofmt")
-	   (setq gofmt-args (list "-l"))
-	   (add-hook 'before-save-hook 'gofmt-before-save nil t)
+	   (add-hook 'before-save-hook #'lsp-organize-imports t t)
+	   (add-hook 'before-save-hook #'lsp-format-buffer t t)
 	   (if (not (string-match "go" compile-command))
 	       (setq-local compile-command "go test -vet=all -v"))
 	   (if (featurep 'lsp-mode)
 	       (progn
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
-		 (lsp-deferred)
-		 )
+		 (lsp-register-custom-settings '(("gopls.hints" gopls-hints)))
+		 (lsp-deferred))
 	     ))))
 
 (use-package go-playground
@@ -188,8 +196,7 @@
   :hook ((go-playground-mode) .
 	 (lambda ()
 	   (define-key go-playground-mode-map (kbd "C-<return>") #'go-playground-exec)
-	   )
-	 )
+	   ))
   )
 
 ;; rust mode support
@@ -272,9 +279,10 @@
 
 
 (use-package clang-format)
-;;(add-to-list 'load-path (concat user-emacs-directory "github/bison-mode/"))
-;;(require 'bison-mode)
-(add-to-list 'auto-mode-alist '("\\.yy\\'" . bison-mode))
+
+(use-package bison-mode
+  :config
+  :hook ((bison-mode) . (lambda() (setq c-basic-offset 8))))
 
 ;; configuration for python programming language
 (add-hook 'python-mode-hook #'eglot-ensure)
@@ -314,7 +322,7 @@
   (interactive)
   (if (not (equal pixelsize nil))
       (set-frame-font (format "Mono-10:pixelsize=%d" pixelsize))
-    (set-frame-font "Mono-10:pixelsize=14")))
+    (set-frame-font "Mono-10")))
 
 (defun indent-buffer ()
   (if (featurep 'clang-format)
@@ -323,10 +331,10 @@
 	(setq-local indent-region-function 'clang-format)))
   (indent-region (point-min) (point-max)))
 
-(add-hook 'prog-mode-hook
-	  (lambda ()
-	    (when (not (derived-mode-p 'makefile-mode 'snippet-mode))
-	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
+;; (add-hook 'prog-mode-hook
+;; 	  (lambda ()
+;; 	    (when (not (derived-mode-p 'makefile-mode 'snippet-mode))
+;; 	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
