@@ -138,6 +138,8 @@
   (setq read-process-output-max (* 1024 1024)) ; 1MiB
   :config
   (define-key lsp-mode-map (kbd "C-c") lsp-command-map)
+  (setq lsp-modeline-code-actions-enable nil)
+  (setq lsp-modeline-diagnostics-enable nil)
   (setq lsp-response-timeout 20)
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
@@ -150,7 +152,8 @@
 						  "/usr/lib/gcc/x86_64-linux-gnu/14")))
 				      ;; let clangd generate index in background
 				      "-background-index"))
-  :hook ((lsp-mode . (lambda () (lsp-inlay-hints-mode t)))))
+  :hook ((lsp-mode . (lambda ()
+		       (lsp-inlay-hints-mode t)))))
 
 (use-package lsp-ui
   :after (lsp-mode)
@@ -333,6 +336,7 @@
 
 (add-hook 'prog-mode-hook
 	  (lambda ()
+	    (abbrev-mode -1)
 	    (when (not (derived-mode-p 'makefile-mode 'snippet-mode))
 	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
 
