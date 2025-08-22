@@ -110,6 +110,7 @@
   :config
   (setq company-minimum-prefix-length 1
 	company-idle-delay 0.0)
+  (setq company-backends (delete 'company-clang company-backends))
   :defer)
 
 (add-hook 'after-init-hook (lambda ()
@@ -140,6 +141,7 @@
   (define-key lsp-mode-map (kbd "C-c") lsp-command-map)
   (setq lsp-modeline-code-actions-enable nil)
   (setq lsp-modeline-diagnostics-enable nil)
+  (setq lsp-enable-indentation nil)
   (setq lsp-response-timeout 20)
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
@@ -173,6 +175,7 @@
 ;; configuration for golang programming language
 (use-package go-mode
   :config
+  (setq gofmt-args (list "-l"))
   (setq gopls-hints (make-hash-table :test 'equal)); for gopls.hints, see https://go.dev/gopls/inlayHints
   (puthash "ignoredError" t gopls-hints)
   (puthash "parameterNames" t gopls-hints)
@@ -181,13 +184,13 @@
   :hook ((go-mode) .
 	 (lambda ()
 	   (subword-mode)
-	   (add-hook 'before-save-hook #'lsp-organize-imports t t)
-	   (add-hook 'before-save-hook #'lsp-format-buffer t t)
+	   (add-hook 'before-save-hook #'gofmt-before-save 0 t)
 	   (if (not (string-match "go" compile-command))
 	       (setq-local compile-command "go test -vet=all -v"))
 	   (if (featurep 'lsp-mode)
 	       (progn
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
+		 (add-hook 'before-save-hook #'lsp-organize-imports 0 t)
 		 (lsp-register-custom-settings '(("gopls.hints" gopls-hints)))
 		 (lsp-deferred))
 	     ))))
@@ -198,8 +201,7 @@
   (setq go-playground-basedir "~/.go/src/playground")
   :hook ((go-playground-mode) .
 	 (lambda ()
-	   (define-key go-playground-mode-map (kbd "C-<return>") #'go-playground-exec)
-	   ))
+	   (define-key go-playground-mode-map (kbd "C-<return>") #'go-playground-exec)))
   )
 
 ;; rust mode support
@@ -281,7 +283,8 @@
 	    (setq c-electric-pound-behavior '(alignleft))))
 
 
-(use-package clang-format)
+(use-package clang-format
+  :hook ((c-mode-common) . (lambda() (clang-format-on-save-mode))))
 
 (use-package bison-mode
   :config
@@ -337,8 +340,9 @@
 (add-hook 'prog-mode-hook
 	  (lambda ()
 	    (abbrev-mode -1)
-	    (when (not (derived-mode-p 'makefile-mode 'snippet-mode))
-	      (add-hook 'before-save-hook 'indent-buffer 0 t))))
+	    ;; (when (not (derived-mode-p 'makefile-mode 'snippet-mode 'go-mode))
+	    ;;   (add-hook 'before-save-hook 'indent-buffer 0 t))
+	    ))
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
