@@ -276,7 +276,11 @@
 (add-hook 'c-mode-common-hook
 	  (lambda ()
 	    (if (featurep 'lsp-mode)
-		(lsp-deferred))
+		(progn
+		  (lsp-deferred)
+		  (lsp-toggle-on-type-formatting) ;clangd's onTypeFormatting is so disgusting
+		  )
+	      )
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
 	    ;; behavior of symbol `#', e.g. #define... #include...
