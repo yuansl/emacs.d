@@ -277,9 +277,8 @@
 	  (lambda ()
 	    (if (featurep 'lsp-mode)
 		(progn
-		  (lsp-deferred)
-		  (lsp-toggle-on-type-formatting) ;clangd's onTypeFormatting is so disgusting
-		  )
+		  (setq lsp-enable-on-type-formatting nil);;clangd's onTypeFormatting is so disgusting, just disble it
+		  (lsp-deferred))
 	      )
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
