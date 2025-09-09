@@ -43,7 +43,8 @@
 ;; This is an emacs elpa mirror from china: CST:China Standard Time
 (if (equal (car (cdr (current-time-zone))) "CST")
     (setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
-			     ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/"))))
+			     ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")))
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/"))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
