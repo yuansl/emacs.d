@@ -148,15 +148,23 @@
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
 				      (concat "--resource-dir="
-					      (if (file-exists-p "/usr/lib/gcc/x86_64-linux-gnu/15")
-						  "/usr/lib/gcc/x86_64-linux-gnu/15"
-						(if (file-exists-p "/usr/local/lib/gcc/x86_64-linux-gnu/15")
-						    "/usr/local/lib/gcc/x86_64-linux-gnu/15"
-						  "/usr/lib/gcc/x86_64-linux-gnu/14")))
+					      (let ((gcc "/usr/local/lib/gcc/x86_64-linux-gnu/15")
+						    (gcc15 "/usr/lib/lib/gcc/x86_64-linux-gnu/15")
+						    (gcc14 "/usr/lib/gcc/x86_64-linux-gnu/14"))
+						(cond ((file-exists-p gcc) gcc)
+						      ((file-exists-p gcc15) gcc15)
+						      ((file-exists-p gcc14) gcc14))))
 				      ;; let clangd generate index in background
 				      "-background-index"))
   :hook ((lsp-mode . (lambda ()
-		       (lsp-inlay-hints-mode t)))))
+		       (lsp-inlay-hints-mode t)))
+	 (c-mode-common . (lambda ()
+			     (let ((major-mode-1 (buffer-local-value 'major-mode (current-buffer))))
+			       (if (or (equal major-mode-1 'c-mode) (equal major-mode-1 'c++-mode)) 
+				   (progn
+				     ;;clangd's onTypeFormatting is so disgusting, just disble it
+				     (setq lsp-enable-on-type-formatting nil)
+				     (lsp-deferred))))))))
 
 (use-package lsp-ui
   :after (lsp-mode)
@@ -187,14 +195,13 @@
 	   (subword-mode)
 	   (add-hook 'before-save-hook #'gofmt-before-save 0 t)
 	   (if (not (string-match "go" compile-command))
-	       (setq-local compile-command "go test -vet=all -v"))
+	       (setq-local compile-command "go test -trimpath -vet=all -timeout=10s -failfast -v"))
 	   (if (featurep 'lsp-mode)
 	       (progn
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
 		 (add-hook 'before-save-hook #'lsp-organize-imports 0 t)
 		 (lsp-register-custom-settings '(("gopls.hints" gopls-hints)))
-		 (lsp-deferred))
-	     ))))
+		 (lsp-deferred))))))
 
 (use-package go-playground
   :config
@@ -267,32 +274,24 @@
 	    (auto-fill-mode)
 	    (setq bidi-display-reordering nil)
 	    (setq line-move-visual nil)))
-;; "custom-setting for c family language"
-(setq c-default-style '((c-mode . "linux")
-			(c++-mode . "stroustrup")
-			(awk-mode . "awk")
-			(python-mode . "python")
-			(other . "gnu")))
+
+(use-package clang-format
+  :hook ((c-mode-common . (lambda ()
+			    (let ((major-mode-1 (buffer-local-value 'major-mode (current-buffer))))
+			      (if (or (equal major-mode-1 'c-mode) (equal major-mode-1 'c++-mode))
+				  (clang-format-on-save-mode)
+				))))))
+
+(use-package bison-mode)
 
 (add-hook 'c-mode-common-hook
 	  (lambda ()
-	    (if (featurep 'lsp-mode)
-		(progn
-		  (setq lsp-enable-on-type-formatting nil);;clangd's onTypeFormatting is so disgusting, just disble it
-		  (lsp-deferred))
-	      )
+	    ;; "custom-setting for c family language"
+	    (setq c-default-style '((c-mode . "linux") (java-mode . "java") (awk-mode . "awk") (other . "gnu")))
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
 	    ;; behavior of symbol `#', e.g. #define... #include...
 	    (setq c-electric-pound-behavior '(alignleft))))
-
-
-(use-package clang-format
-  :hook ((c-mode-common) . (lambda() (clang-format-on-save-mode))))
-
-(use-package bison-mode
-  :config
-  :hook ((bison-mode) . (lambda() (setq c-basic-offset 8))))
 
 ;; configuration for python programming language
 (add-hook 'python-mode-hook #'eglot-ensure)
@@ -303,9 +302,9 @@
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode)
-  :hook ((markdown-mode) . (lambda()
+  :hook ((markdown-mode . (lambda()
 			     (auto-fill-mode 0))
-	 ))
+	 )))
 (use-package markdown-toc)
 
 (use-package yaml-mode)
