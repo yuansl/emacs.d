@@ -195,7 +195,7 @@
 	   (subword-mode)
 	   (add-hook 'before-save-hook #'gofmt-before-save 0 t)
 	   (if (not (string-match "go" compile-command))
-	       (setq-local compile-command "go test -trimpath -vet=all -timeout=10s -failfast -v"))
+	       (setq-local compile-command "go test -vet=all -timeout=10s -failfast -v"))
 	   (if (featurep 'lsp-mode)
 	       (progn
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
@@ -284,10 +284,11 @@
 
 (use-package bison-mode)
 
+(setq-default c-default-style '((c-mode . "linux") (java-mode . "java") (awk-mode . "awk") (other . "gnu")))
+
 (add-hook 'c-mode-common-hook
 	  (lambda ()
 	    ;; "custom-setting for c family language"
-	    (setq c-default-style '((c-mode . "linux") (java-mode . "java") (awk-mode . "awk") (other . "gnu")))
 	    ;; comment-style
 	    (setq comment-style 'extra-line)
 	    ;; behavior of symbol `#', e.g. #define... #include...
@@ -343,6 +344,7 @@
 (add-hook 'prog-mode-hook
 	  (lambda ()
 	    (abbrev-mode -1)
+	    (define-key prog-mode-map (kbd "<f5>") #'compile)
 	    ;; (when (not (derived-mode-p 'makefile-mode 'snippet-mode 'go-mode))
 	    ;;   (add-hook 'before-save-hook 'indent-buffer 0 t))
 	    ))
