@@ -13,8 +13,7 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
-(setq-default default-frame-alist '((font . "Monospace-10")(width . 100)(height . 45)))
-(set-face-attribute 'default t :font  "Monospace-10")
+(setq-default default-frame-alist '((font . "Monospace-10:pixelsize=14")(width . 100)(height . 45)))
 (setq-default initial-major-mode 'markdown-mode)
 (setq-default initial-scratch-message "\
 # This buffer is for text that is not saved, and for markdown-mode.
@@ -148,12 +147,10 @@
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
 				      (concat "--resource-dir="
-					      (let ((gcc "/usr/local/lib/gcc/x86_64-linux-gnu/15")
-						    (gcc15 "/usr/lib/lib/gcc/x86_64-linux-gnu/15")
-						    (gcc14 "/usr/lib/gcc/x86_64-linux-gnu/14"))
+					      (let ((gcc "/usr/lib/gcc/x86_64-linux-gnu/15"))
+						(gcc-new "/usr/local/lib/gcc/x86_64-linux-gnu/15")
 						(cond ((file-exists-p gcc) gcc)
-						      ((file-exists-p gcc15) gcc15)
-						      ((file-exists-p gcc14) gcc14))))
+						      ((file-exists-p gcc15) gcc-new))))
 				      ;; let clangd generate index in background
 				      "-background-index"))
   :hook ((lsp-mode . (lambda ()
