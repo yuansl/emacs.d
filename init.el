@@ -13,7 +13,7 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
-(setq-default default-frame-alist '((width . 100)(height . 45)))
+(setq-default default-frame-alist '((width . 105)(height . 45)))
 (setq-default initial-major-mode 'markdown-mode)
 (setq-default initial-scratch-message "\
 # This buffer is for text that is not saved, and for markdown-mode.
