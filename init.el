@@ -13,13 +13,28 @@
 (setq-default frame-title-format "%F %@ %f")
 (setq-default major-mode 'text-mode)
 (setq-default ring-bell-function 'ignore)
-(setq-default default-frame-alist '((font . "Monospace-10:pixelsize=14")(width . 100)(height . 45)))
+(setq-default default-frame-alist '((width . 100)(height . 45)))
 (setq-default initial-major-mode 'markdown-mode)
 (setq-default initial-scratch-message "\
 # This buffer is for text that is not saved, and for markdown-mode.
 # To create a file, visit it with `C-x C-f' and enter text in its buffer.
 
 ")
+(defun get-screen-dpi ()
+  "Calculate the screen DPI."
+  (let ((mm-height (display-mm-height))
+        (pixel-height (display-pixel-height)))
+    (if (and mm-height (> mm-height 0) (> pixel-height 0))
+        (round (/ pixel-height (/ mm-height 25.4)))
+      nil)))
+(defun set-default-frame-font ()
+  (if (display-graphic-p)
+      (let ((dpi (get-screen-dpi))(non-hidpi 96))
+	(if (and dpi (>= dpi non-hidpi))
+	    (set-face-attribute 'default nil :height 105))
+	))
+  )
+(add-hook 'server-after-make-frame-hook 'set-default-frame-font)
 ;; Enable so-long library.
 (when (require 'so-long nil :noerror)
   (global-so-long-mode 1)
@@ -147,10 +162,10 @@
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
 				      (concat "--resource-dir="
-					      (let ((gcc "/usr/lib/gcc/x86_64-linux-gnu/15"))
-						(gcc-new "/usr/local/lib/gcc/x86_64-linux-gnu/15")
+					      (let ((gcc "/usr/lib/gcc/x86_64-linux-gnu/15")
+						    (gcc-new "/usr/local/lib/gcc/x86_64-linux-gnu/15"))
 						(cond ((file-exists-p gcc) gcc)
-						      ((file-exists-p gcc15) gcc-new))))
+						      ((file-exists-p gcc-new) gcc-new))))
 				      ;; let clangd generate index in background
 				      "-background-index"))
   :hook ((lsp-mode . (lambda ()
