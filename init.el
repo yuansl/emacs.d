@@ -11,9 +11,9 @@
 ;; `%@': '@'(if at a remote machine) or '-'(if at localhost)
 ;; `%f': file-name
 (setq-default frame-title-format "%F %@ %f")
-(setq-default major-mode 'text-mode)
+(setq-default default-frame-alist '((width . 100)(height . 45)))
 (setq-default ring-bell-function 'ignore)
-(setq-default default-frame-alist '((width . 105)(height . 45)))
+(setq-default major-mode 'text-mode)
 (setq-default initial-major-mode 'markdown-mode)
 (setq-default initial-scratch-message "\
 # This buffer is for text that is not saved, and for markdown-mode.
@@ -23,14 +23,15 @@
 (defun get-screen-dpi ()
   "Calculate the screen DPI."
   (let ((mm-height (display-mm-height))
-        (pixel-height (display-pixel-height)))
+        (pixel-height (display-pixel-height))
+	(pixel-per-mm 25.4))
     (if (and mm-height (> mm-height 0) (> pixel-height 0))
-        (round (/ pixel-height (/ mm-height 25.4)))
-      nil)))
+        (round (/ pixel-height (/ mm-height pixel-per-mm)))
+      0)))
 (defun set-default-frame-font ()
   (if (display-graphic-p)
       (let ((dpi (get-screen-dpi))(non-hidpi 96))
-	(if (and dpi (>= dpi non-hidpi))
+	(if (>= dpi non-hidpi)
 	    (set-face-attribute 'default nil :height 105))
 	))
   )
@@ -163,9 +164,10 @@
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
 				      (concat "--resource-dir="
 					      (let ((gcc "/usr/lib/gcc/x86_64-linux-gnu/15")
-						    (gcc-new "/usr/local/lib/gcc/x86_64-linux-gnu/15"))
-						(cond ((file-exists-p gcc) gcc)
-						      ((file-exists-p gcc-new) gcc-new))))
+						    (gcc-latest "/usr/local/lib/gcc/x86_64-linux-gnu/15"))
+						(cond
+						 ((file-exists-p gcc-latest) gcc-latest)
+						 ((file-exists-p gcc) gcc))))
 				      ;; let clangd generate index in background
 				      "-background-index"))
   :hook ((lsp-mode . (lambda ()
