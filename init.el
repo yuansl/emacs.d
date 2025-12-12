@@ -78,10 +78,10 @@
      ((:application tramp)
       tramp-connection-local-default-system-profile
       tramp-connection-local-default-shell-profile)))
+ '(display-line-numbers-type 'relative)
  '(display-time-default-load-average nil)
  '(display-time-format "%H:%M %Z")
  '(display-time-mode t)
- '(display-line-numbers-type 'relative)
  '(electric-pair-mode t)
  '(ido-enable-flex-matching t)
  '(ido-enable-regexp t)
@@ -135,7 +135,8 @@
 			     (which-key-mode)
 			     (helm-mode)
 			     (recentf-mode)
-			     (savehist-mode)))
+			     (savehist-mode)
+			     (pixel-scroll-precision-mode 1)))
 
 (use-package magit
   :config
@@ -366,9 +367,10 @@
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(line-number-current-line ((t (:inherit line-number-minor-tick)))))
