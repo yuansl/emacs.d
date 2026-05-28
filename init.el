@@ -30,6 +30,8 @@
       0)))
 (defun set-default-frame-font ()
   (if (display-graphic-p)
+      (if (eq system-type 'darwin)
+	    (set-frame-font (font-spec :family "Menlo" :size 14) nil t))
       (let ((dpi (get-screen-dpi))(non-hidpi 96))
 	(if (> dpi non-hidpi)
 	    (set-face-attribute 'default nil :height 105))
