@@ -1,4 +1,4 @@
-;; alias
+;; alias  -*- lexical-binding: t; -*-
 (defalias 'list-buffers 'ibuffer)
 
 ;; make 'y-or-n-p a short version of 'yes-or-no-p
@@ -214,7 +214,7 @@
 	   (subword-mode)
 	   (add-hook 'before-save-hook #'gofmt-before-save 0 t)
 	   (if (not (string-match "go" compile-command))
-	       (setq-local compile-command "go test -vet=all -timeout=10s -failfast -v"))
+	       (setq-local compile-command "go test -vet=all -timeout=10s -failfast -v ."))
 	   (if (featurep 'lsp-mode)
 	       (progn
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
