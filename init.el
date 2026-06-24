@@ -30,7 +30,7 @@
       0)))
 (defun set-default-frame-font ()
   (if (display-graphic-p)
-      (if (eq system-type 'darwin)
+      (if (and (eq system-type 'darwin) (< (get-screen-dpi) 96))
 	    (set-frame-font (font-spec :family "Menlo" :size 14) nil t))
       (let ((dpi (get-screen-dpi))(non-hidpi 96))
 	(if (> dpi non-hidpi)
@@ -207,6 +207,8 @@
   (puthash "parameterNames" t gopls-hints)
   (puthash "compositeLiteralFields" t gopls-hints)
   (puthash "functionTypeParameters" t gopls-hints)
+  (setq gopls-analyses (make-hash-table :test 'equal))
+  (puthash "minmax" :json-false gopls-analyses)
   :hook ((go-mode) .
 	 (lambda ()
 	   (subword-mode)
@@ -218,6 +220,7 @@
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
 		 (add-hook 'before-save-hook #'lsp-organize-imports 0 t)
 		 (lsp-register-custom-settings '(("gopls.hints" gopls-hints)))
+		 (lsp-register-custom-settings '(("gopls.analyses" gopls-analyses)))
 		 (lsp-deferred))))))
 
 (use-package go-playground
