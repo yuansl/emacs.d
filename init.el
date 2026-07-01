@@ -30,7 +30,7 @@
       0)))
 (defun set-default-frame-font ()
   (if (display-graphic-p)
-      (if (and (eq system-type 'darwin) (< (get-screen-dpi) 96))
+      (if (and (eq system-type 'darwin))
 	    (set-frame-font (font-spec :family "Menlo" :size 14) nil t))
       (let ((dpi (get-screen-dpi))(non-hidpi 96))
 	(if (> dpi non-hidpi)
@@ -181,7 +181,9 @@
 				   (progn
 				     ;;clangd's onTypeFormatting is so disgusting, just disble it
 				     (setq lsp-enable-on-type-formatting nil)
-				     (lsp-deferred))))))))
+				     (lsp-deferred))))))
+	 (lua-mode . (lambda ()
+		       (lsp-deferred)))))
 
 (use-package lsp-ui
   :after (lsp-mode)
@@ -214,7 +216,7 @@
 	   (subword-mode)
 	   (add-hook 'before-save-hook #'gofmt-before-save 0 t)
 	   (if (not (string-match "go" compile-command))
-	       (setq-local compile-command "go test -vet=all -timeout=10s -failfast -v ."))
+	       (setq-local compile-command "go test -vet=all -timeout=10s -failfast -v . "))
 	   (if (featurep 'lsp-mode)
 	       (progn
 		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
