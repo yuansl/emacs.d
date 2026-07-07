@@ -62,6 +62,7 @@
     (setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
 			     ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")))
   (setq package-archives '(("melpa" . "https://melpa.org/packages/"))))
+(package-initialize)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -98,11 +99,12 @@
  '(org-agenda-files nil)
  '(package-native-compile t)
  '(package-selected-packages
-   '(all-the-icons bison-mode clang-format company go-mode go-playground
+   '(all-the-icons auctex-cluttex bison-mode clang-format company
+		   dired-hide-dotfiles go-mode go-playground gotest-ts
 		   helm lsp-mode lsp-treemacs lsp-ui magit
 		   markdown-mode markdown-toc protobuf-mode rust-mode
-		   rust-playground sql-indent treemacs yaml-mode
-		   yasnippet yasnippet-classic-snippets))
+		   rust-playground sql-indent treemacs typescript-mode
+		   yaml-mode yasnippet yasnippet-classic-snippets))
  '(save-place-mode t)
  '(size-indication-mode t)
  '(tool-bar-mode nil)
@@ -166,8 +168,8 @@
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
 				      (concat "--resource-dir="
-					      (let ((gcc "/usr/lib/gcc/x86_64-linux-gnu/15")
-						    (gcc-latest "/usr/local/lib/gcc/x86_64-linux-gnu/15"))
+					      (let ((gcc "/usr/lib/gcc/x86_64-linux-gnu/current")
+						    (gcc-latest "/usr/local/lib/gcc/x86_64-linux-gnu/latest"))
 						(cond
 						 ((file-exists-p gcc-latest) gcc-latest)
 						 ((file-exists-p gcc) gcc))))
@@ -219,7 +221,7 @@
 	       (setq-local compile-command "go test -vet=all -timeout=10s -failfast -v . "))
 	   (if (featurep 'lsp-mode)
 	       (progn
-		 ;; (setq lsp-go-build-flags ["-tags=duckdb"])
+		 ;; (setq lsp-go-build-flags ["-tags=xxx"])
 		 (add-hook 'before-save-hook #'lsp-organize-imports 0 t)
 		 (lsp-register-custom-settings '(("gopls.hints" gopls-hints)))
 		 (lsp-register-custom-settings '(("gopls.analyses" gopls-analyses)))
@@ -381,3 +383,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(line-number-current-line ((t (:inherit line-number-minor-tick)))))
+(put 'set-goal-column 'disabled nil)
