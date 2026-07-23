@@ -1,6 +1,7 @@
 ;; alias  -*- lexical-binding: t; -*-
 (defalias 'list-buffers 'ibuffer)
-
+(with-eval-after-load 'ibuffer
+    (add-to-list 'ibuffer-maybe-show-predicates "^\\*helm")) ; hide helm buffers in *Ibuffer*
 ;; make 'y-or-n-p a short version of 'yes-or-no-p
 (setq-default use-short-answers t)
 
@@ -30,13 +31,13 @@
       0)))
 (defun set-default-frame-font ()
   (if (display-graphic-p)
-      (if (and (eq system-type 'darwin))
+      (progn
+	(if (and (eq system-type 'darwin))
 	    (set-frame-font (font-spec :family "Menlo" :size 14) nil t))
-      (let ((dpi (get-screen-dpi))(non-hidpi 96))
-	(if (> dpi non-hidpi)
-	    (set-face-attribute 'default nil :height 105))
-	))
-  )
+	(let ((dpi (get-screen-dpi))(non-hidpi 96))
+	  (if (> dpi non-hidpi)
+	      (set-face-attribute 'default nil :height 105))
+	  ))))
 (add-hook 'server-after-make-frame-hook 'set-default-frame-font)
 ;; Enable so-long library.
 (when (require 'so-long nil :noerror)
