@@ -6,6 +6,7 @@
 (setq-default use-short-answers t)
 
 (setq-default use-dialog-box nil)
+(setq-default speedbar-prefer-window t)
 
 ;; frame-title-format:
 ;; `%F': frame-name
@@ -21,24 +22,25 @@
 # To create a file, visit it with `C-x C-f' and enter text in its buffer.
 
 ")
-(defun get-screen-dpi ()
-  "Calculate the screen DPI."
-  (let ((mm-height (display-mm-height))
-        (pixel-height (display-pixel-height))
-	(pixel-per-mm 25.4))
-    (if (and mm-height (> mm-height 0) (> pixel-height 0))
-        (round (/ pixel-height (/ mm-height pixel-per-mm)))
-      0)))
-(defun set-default-frame-font ()
-  (if (display-graphic-p)
-      (progn
-	(if (and (eq system-type 'darwin))
-	    (set-frame-font (font-spec :family "Menlo" :size 14) nil t))
-	(let ((dpi (get-screen-dpi))(non-hidpi 96))
-	  (if (> dpi non-hidpi)
-	      (set-face-attribute 'default nil :height 105))
-	  ))))
-(add-hook 'server-after-make-frame-hook 'set-default-frame-font)
+;; (defun get-screen-dpi ()
+;;   "Calculate the screen DPI."
+;;   (let ((mm-height (display-mm-height))
+;;         (pixel-height (display-pixel-height))
+;; 	(pixel-per-mm 25.4))
+;;     (if (and mm-height (> mm-height 0) (> pixel-height 0))
+;;         (round (/ pixel-height (/ mm-height pixel-per-mm)))
+;;       0)))
+;; (defun set-default-frame-font ()
+;;   (if (display-graphic-p)
+;;       (progn
+;; 	(if (and (eq system-type 'darwin))
+;; 	    (set-frame-font (font-spec :family "Menlo" :size 14) nil t))
+;; 	(let ((dpi (get-screen-dpi))(non-hidpi 96))
+;; 	  (if (> dpi non-hidpi)
+;; 	      (set-face-attribute 'default nil :height 105))
+;; 	  ))))
+(set-face-attribute 'default nil :height 105)
+;; (add-hook 'server-after-make-frame-hook 'set-default-frame-font)
 ;; Enable so-long library.
 (when (require 'so-long nil :noerror)
   (global-so-long-mode 1)
@@ -65,6 +67,9 @@
   (setq package-archives '(("melpa" . "https://melpa.org/packages/"))))
 (package-initialize)
 
+(setq use-package-always-ensure t)
+;; (setq use-package-always-defer t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -77,7 +82,9 @@
     "#f6f3e8"])
  '(column-number-mode t)
  '(connection-local-criteria-alist
-   '(((:application tramp :protocol "kubernetes")
+   '(((:application eshell) eshell-connection-default-profile)
+     ((:application vc-git) vc-git-connection-default-profile)
+     ((:application tramp :protocol "kubernetes")
       tramp-kubernetes-connection-local-default-profile)
      ((:application tramp)
       tramp-connection-local-default-system-profile
@@ -112,9 +119,6 @@
  '(tooltip-mode nil)
  '(vc-follow-symlinks t)
  '(warning-suppress-log-types '((comp))))
-
-(setq use-package-always-ensure t)
-(setq use-package-always-defer t)
 
 (use-package helm
   :init
@@ -168,12 +172,12 @@
   (setq lsp-auto-guess-root t)
   (setq lsp-enable-file-watchers nil)
   (setq lsp-clients-clangd-args (list "--header-insertion=never"
-				      (concat "--resource-dir="
-					      (let ((gcc "/usr/lib/gcc/x86_64-linux-gnu/current")
-						    (gcc-latest "/usr/local/lib/gcc/x86_64-linux-gnu/latest"))
-						(cond
-						 ((file-exists-p gcc-latest) gcc-latest)
-						 ((file-exists-p gcc) gcc))))
+				      ;; (concat "--resource-dir="
+				      ;; 	      (let ((gcc "/usr/lib/gcc/x86_64-linux-gnu/current")
+				      ;; 		    (gcc-latest "/usr/local/lib/gcc/x86_64-linux-gnu/latest"))
+				      ;; 		(cond
+				      ;; 		 ((file-exists-p gcc-latest) gcc-latest)
+				      ;; 		 ((file-exists-p gcc) gcc))))
 				      ;; let clangd generate index in background
 				      "-background-index"))
   :hook ((lsp-mode . (lambda ()
